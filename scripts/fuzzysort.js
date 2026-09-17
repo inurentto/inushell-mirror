@@ -45,7 +45,7 @@ var go = (search, targets, options) => {
     var searchBitflags = preparedSearch.bitflags
     var containsSpace  = preparedSearch.containsSpace
 
-    var threshold = denormalizeScore( options?.threshold || 0 )
+    var threshold = ( denormalizeScoreoptions?.threshold || 0 )
     var limit     = options?.limit || INFINITY
 
     var resultsLen = 0; var limitedCount = 0

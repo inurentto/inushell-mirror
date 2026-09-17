@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -33,7 +34,7 @@ Scope {
 
             mask: Region { item: contentContainer }
 
-            implicitWidth: Math.min( Math.max( message.width + Config.theme.padding.normal * 2 + Config.theme.spacing.big * 2, 500 ), 1000 )
+            implicitWidth: Math.min( Math.max( message.width + Settings.spacing.medium * 2 + Settings.spacing.big * 2, 500), 1000)
             implicitHeight: screen.height / 2
 
             WlrLayershell.layer: WlrLayer.Overlay
@@ -50,16 +51,16 @@ Scope {
                 openAnimation.start()
             }
 
-            function submit( ) {
-                polkitAgent.flow?.submit( passwordInput.text )
+            function submit() {
+                polkitAgent.flow?.submit(passwordInput.text)
                 passwordInput.text = ""
-                passwordInput.forceActiveFocus( )
+                passwordInput.forceActiveFocus()
 
                 closeAnimation.start()
             }
 
-            function cancel( ) {
-                polkitAgent.flow?.cancelAuthenticationRequest( )
+            function cancel() {
+                polkitAgent.flow?.cancelAuthenticationRequest()
                 passwordInput.text = ""
 
                 closeAnimation.start()
@@ -70,19 +71,19 @@ Scope {
 
                 property real yOffset: interfaceWindow.height
 
-                x: Config.theme.spacing.big
-                y: interfaceWindow.height - height + yOffset - Config.theme.spacing.big
+                x: Settings.spacing.big
+                y: interfaceWindow.height - height + yOffset - Settings.spacing.big
 
-                implicitWidth: interfaceWindow.width - border.width * 2 - Config.theme.spacing.big * 2
+                implicitWidth: interfaceWindow.width - border.width * 2 - Settings.spacing.big * 2
 
-                topMargin: Config.theme.padding.normal
-                bottomMargin: Config.theme.padding.normal
-                leftMargin: Config.theme.padding.normal
-                rightMargin: Config.theme.padding.normal
+                topMargin: Settings.spacing.medium
+                bottomMargin: Settings.spacing.medium
+                leftMargin: Settings.spacing.medium
+                rightMargin: Settings.spacing.medium
 
-                color: Config.theme.getBackground0( )
+                color: Settings.palette.background0
 
-                radius: Config.theme.cornerRadius.big
+                radius: Settings.radius.big
 
                 ParallelAnimation {
                     id: openAnimation
@@ -91,16 +92,16 @@ Scope {
                         property: "yOffset"
                         from: interfaceWindow.height
                         to: 0
-                        duration: Config.theme.animationSpeed.normal
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.normal
+                        easing.type: Settings.animationEasing.easeOut
                     }
                     PropertyAnimation {
                         target: contentContainer
                         property: "opacity"
                         from: 0
                         to: 1
-                        duration: Config.theme.animationSpeed.normal
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.normal
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
 
@@ -111,15 +112,15 @@ Scope {
                             target: contentContainer
                             property: "yOffset"
                             to: interfaceWindow.height
-                            duration: Config.theme.animationSpeed.normal
-                            easing.type: Config.theme.easingType
+                            duration: Settings.animationSpeed.normal
+                            easing.type: Settings.animationEasing.easeOut
                         }
                         PropertyAnimation {
                             target: contentContainer
                             property: "opacity"
                             to: 0
-                            duration: Config.theme.animationSpeed.normal
-                            easing.type: Config.theme.easingType
+                            duration: Settings.animationSpeed.normal
+                            easing.type: Settings.animationEasing.easeOut
                         }
                     }
                     PropertyAction { target: interfaceLoader; property: "activeAsync"; value: false }
@@ -128,20 +129,20 @@ Scope {
                 ColumnLayout {
                     id: contentLayout
                     
-                    spacing: Config.theme.spacing.big
+                    spacing: Settings.spacing.big
 
                     ColumnLayout {
                         id: descriptionColumn
 
                         Layout.fillWidth: true
 
-                        spacing: Config.theme.spacing.normal
+                        spacing: Settings.spacing.medium
 
                         Text {
                             id: message
 
                             text: polkitAgent.flow?.message || message.text
-                            font.pointSize: Config.theme.textSize.smallTitle
+                            font.pointSize: Settings.fontSize.smallTitle
                         }
 
                         Text {
@@ -163,7 +164,7 @@ Scope {
 
                         Layout.fillWidth: true
 
-                        spacing: Config.theme.spacing.normal
+                        spacing: Settings.spacing.medium
 
                         Text {
                             text: polkitAgent.flow ? polkitAgent.flow?.inputPrompt !== "" ? polkitAgent.flow?.inputPrompt : "Checking..." : ""
@@ -172,7 +173,7 @@ Scope {
 
                         Text {
                             text: polkitAgent.flow?.supplementaryIsError ? polkitAgent.flow?.supplementaryMessage : "Authentication failed, please try again"
-                            color: Config.theme.getRed( )
+                            color: Settings.palette.red
                             visible: polkitAgent.flow?.failed || false
                         }
 
@@ -183,8 +184,8 @@ Scope {
 
                             echoMode: polkitAgent.flow?.responseVisible ? TextInput.Normal : TextInput.Password
 
-                            onAccepted: submit( )
-                            onUnfocusRequested: cancel( )
+                            onAccepted: submit()
+                            onUnfocusRequested: cancel()
                         }
                     }
 
@@ -197,31 +198,31 @@ Scope {
                         implicitHeight: childrenRect.height
 
                         RowLayout {
-                            spacing: Config.theme.spacing.small
+                            spacing: Settings.spacing.small
 
                             Button {
                                 id: okButton
 
-                                borderHoverColor: Config.theme.getGreen( )
+                                borderHoverColor: Settings.palette.green
 
-                                topRightCornerRadius: Config.theme.cornerRadius.small
-                                bottomRightCornerRadius: Config.theme.cornerRadius.small
+                                topRightCornerRadius: Settings.radius.small
+                                bottomRightCornerRadius: Settings.radius.small
 
                                 enabled: passwordInput.text.length > 0 // || !!polkitAgent.flow?.isResponseRequired
                                 
-                                onClicked: submit( )
+                                onClicked: submit()
 
                                 Text {
                                     text: "Confirm"
                                 }
                             }
                             Button {
-                                borderHoverColor: Config.theme.getRed( )
+                                borderHoverColor: Settings.palette.red
 
-                                topLeftCornerRadius: Config.theme.cornerRadius.small
-                                bottomLeftCornerRadius: Config.theme.cornerRadius.small
+                                topLeftCornerRadius: Settings.radius.small
+                                bottomLeftCornerRadius: Settings.radius.small
 
-                                onClicked: cancel( )
+                                onClicked: cancel()
 
                                 Text {
                                     text: "Cancel"
@@ -244,12 +245,12 @@ Scope {
             Connections {
                 target: polkitAgent.flow
 
-                function onIsResponseRequiredChanged( ) {
+                function onIsResponseRequiredChanged() {
                     passwordInput.text = ""
                     if (polkitAgent.flow.isResponseRequired) passwordInput.forceActiveFocus()
                 }
 
-                function onFailedChanged( ) {
+                function onFailedChanged() {
                     if (polkitAgent.flow.failed) passwordInput.text = ""
                 }
             }

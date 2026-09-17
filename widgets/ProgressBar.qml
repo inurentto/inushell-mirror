@@ -1,5 +1,6 @@
 import QtQuick
 
+import qs.services
 import qs.singletons
 import qs.widgets
 
@@ -8,14 +9,14 @@ import qs.widgets
 Rectangle {
     id: root
 
-    property color backgroundColor: Config.theme.getBackground1( )
-    property color backgroundBorderColor: Config.theme.getBorder( )
+    property color backgroundColor: Settings.palette.background1
+    property color backgroundBorderColor: Settings.palette.border
     
-    property color fillColor: Config.theme.getAccent( )
-    property color fillBorderColor: Config.theme.getForeground2( )
+    property color fillColor: Settings.palette.accent
+    property color fillBorderColor: Settings.palette.foreground2
 
-    property color percentageColor: Config.theme.getForeground0( )
-    property color percentageFillColor: Config.theme.getBackground0( )
+    property color percentageColor: Settings.palette.foreground0
+    property color percentageFillColor: Settings.palette.background0
 
     property int borderWidth: 0
 
@@ -29,7 +30,7 @@ Rectangle {
     property real value: 0
     property bool useRound: false
     property string customText: ""
-    readonly property int roundedValue: useRound ? Math.round( value * 100 ) : Math.floor( value * 100 )
+    readonly property int roundedValue: useRound ? Math.round(value * 100) : Math.floor(value * 100)
 
     readonly property real textLength: backgroundText.width
 
@@ -43,18 +44,18 @@ Rectangle {
         color: backgroundBorderColor
     }
 
-    radius: Config.theme.cornerRadius.normal
+    radius: Settings.radius.medium
 
     Behavior on color {
         ColorAnimation {
-            duration: Config.theme.animationSpeed.fast
-            easing.type: Config.theme.easingType
+            duration: Settings.animationSpeed.fast
+            easing.type: Settings.animationEasing.easeOut
         }
     }
     Behavior on border.color {
         ColorAnimation {
-            duration: Config.theme.animationSpeed.fast
-            easing.type: Config.theme.easingType
+            duration: Settings.animationSpeed.fast
+            easing.type: Settings.animationEasing.easeOut
         }
     }
 
@@ -63,8 +64,8 @@ Rectangle {
 
         text: customText === "" ? roundedValue + "%" : customText
 
-        x: ( root.width - contentWidth ) / 2
-        y: ( root.height - contentHeight ) / 2
+        x: (root.width - contentWidth) / 2
+        y: (root.height - contentHeight) / 2
 
         color: percentageColor
 
@@ -74,8 +75,8 @@ Rectangle {
 
         Behavior on color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
     }
@@ -84,37 +85,37 @@ Rectangle {
         implicitWidth: vertical ? root.width : value * root.width
         implicitHeight: vertical ? value * root.height : root.height
 
-        x: vertical ? 0 : ( flip ? ( 1 - value ) * root.width : 0 )
-        y: vertical ? ( flip ? ( 1 - value ) * root.height : 0 ) : 0
+        x: vertical ? 0 : (flip ? (1 - value) * root.width : 0)
+        y: vertical ? (flip ? (1 - value) * root.height : 0) : 0
 
         clip: true
 
         Behavior on implicitWidth {
             enabled: !vertical
             PropertyAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
         Behavior on implicitHeight {
             enabled: vertical
             PropertyAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
         Behavior on x {
             enabled: !vertical
             PropertyAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
         Behavior on y {
             enabled: vertical
             PropertyAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
 
@@ -122,8 +123,8 @@ Rectangle {
             implicitWidth: root.width
             implicitHeight: root.height
 
-            x: vertical ? 0 : ( flip ? -parent.x : 0 )
-            y: vertical ? ( flip ? -parent.y : 0 ) : 0
+            x: vertical ? 0 : (flip ? -parent.x : 0)
+            y: vertical ? (flip ? -parent.y : 0) : 0
 
             color: fillColor
 
@@ -139,22 +140,22 @@ Rectangle {
 
             Behavior on color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
             Behavior on border.color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
 
             Text {
                 text: customText === "" ? roundedValue + "%" : customText
 
-                x: ( root.width - contentWidth ) / 2
-                y: ( root.height - contentHeight ) / 2
+                x: (root.width - contentWidth) / 2
+                y: (root.height - contentHeight) / 2
 
                 color: percentageFillColor
 
@@ -164,8 +165,8 @@ Rectangle {
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
             }

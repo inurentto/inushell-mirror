@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -33,7 +34,7 @@ Module {
                 ColumnLayout {
                     width: Config.notificationWidth
 
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     StyledListView {
                         id: notificationListView
@@ -44,13 +45,13 @@ Module {
                             values: NotificationsManager.openNonTransient.filter(n => true) // Fuckass hack to get ListView.onRemove working (cause otherwise it is counted as a ref not an actual value!!!)
                         }
 
-                        height: Math.min(600 - Config.theme.padding.normal * 2, contentHeight)
+                        height: Math.min(600 - Settings.spacing.medium * 2, contentHeight)
                         clip: true
 
                         orientation: Qt.Vertical
 
                         displaced: Transition {
-                            NumberAnimation { properties: "y"; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
+                            NumberAnimation { properties: "y"; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
                         }
 
                         delegate: Item {
@@ -67,8 +68,8 @@ Module {
                                 id: removeAnimation
                                 PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
                                 ParallelAnimation {
-                                    NumberAnimation { target: wrapper; property: "x"; to: 600; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
-                                    NumberAnimation { target: wrapper; property: "opacity"; to: 0; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
+                                    NumberAnimation { target: wrapper; property: "x"; to: 600; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
+                                    NumberAnimation { target: wrapper; property: "opacity"; to: 0; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
                                 }
                                 PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
                             }
@@ -92,7 +93,7 @@ Module {
                         Layout.fillWidth: true
 
                         text: "No notifications :("
-                        color: Config.theme.getForeground2()
+                        color: Settings.palette.foreground2
                         horizontalAlignment: Text.AlignHCenter
 
                         visible: NotificationsManager.open.length === 0

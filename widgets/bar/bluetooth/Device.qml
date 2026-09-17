@@ -2,6 +2,7 @@ import Quickshell.Bluetooth
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -14,12 +15,12 @@ Button {
     required property BluetoothDevice device
     property bool selected: false
 
-    backgroundColor: selected ? Config.theme.getAccent() : Config.theme.getBackground1()
-    backgroundHoverColor: selected ? Config.theme.getAccent() : Config.theme.getBackground2()
-    backgroundPressColor: selected ? Config.theme.getAccent() : Config.theme.getBackground0()
+    backgroundColor: selected ? Settings.palette.accent : Settings.palette.background1
+    backgroundHoverColor: selected ? Settings.palette.accent : Settings.palette.background2
+    backgroundPressColor: selected ? Settings.palette.accent : Settings.palette.background0
 
     RowLayout {
-        spacing: Config.theme.spacing.normal
+        spacing: Settings.spacing.medium
 
         TintedIcon {
             property string deviceIcon: Icons.getIcon(device.icon)
@@ -31,25 +32,25 @@ Button {
                 if (deviceIcon === "") return fallbackIcon
                 else return deviceIcon
             }
-            tint: root.selected ? Config.theme.getBackground0() : Config.theme.getForeground0()
+            tint: root.selected ? Settings.palette.background0 : Settings.palette.foreground0
 
             Behavior on tint {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
         }
 
         Text {
             text: device.name
-            color: root.selected ? Config.theme.getBackground0() : Config.theme.getForeground0()
+            color: root.selected ? Settings.palette.background0 : Settings.palette.foreground0
             elide: Text.ElideRight
 
             Behavior on color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
         }
@@ -60,13 +61,13 @@ Button {
 
         Text {
             text: "Connected"
-            color: root.selected ? Config.theme.getBackground0() : Config.theme.getForeground2()
+            color: root.selected ? Settings.palette.background0 : Settings.palette.foreground2
             visible: device.connected
 
             Behavior on color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
         }

@@ -5,6 +5,7 @@ import Quickshell.Services.UPower
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -50,7 +51,7 @@ Module {
                 Text {
                     text: PowerManager.mainBattery ? Math.floor(PowerManager.mainBattery.percentage * 100) + "%" : PowerManager.batteries.length
                     verticalAlignment: Text.AlignVCenter
-                    color: PanelManager.currentOpenPanel === "battery" ? Config.theme.getAccent() : Config.theme.getForeground0()
+                    color: PanelManager.currentOpenPanel === "battery" ? Settings.palette.accent : Settings.palette.foreground0
                 }
             }
 
@@ -64,9 +65,9 @@ Module {
 
             readonly property color profileColor: {
                 switch (PowerProfiles.profile) {
-                    case PowerProfile.Performance: return Config.theme.getRed()
-                    case PowerProfile.Balanced: return Config.theme.getForeground0()
-                    case PowerProfile.PowerSaver: return Config.theme.getGreen()
+                    case PowerProfile.Performance: return Settings.palette.red
+                    case PowerProfile.Balanced: return Settings.palette.foreground0
+                    case PowerProfile.PowerSaver: return Settings.palette.green
                 }
             }
 

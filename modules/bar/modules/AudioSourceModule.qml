@@ -4,6 +4,7 @@ import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -44,13 +45,13 @@ Module {
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Text {
                         Layout.fillWidth: true
 
                         text: "Source"
-                        font.pointSize: Config.theme.textSize.smallTitle
+                        font.pointSize: Settings.fontSize.smallTitle
                         horizontalAlignment: Text.AlignHCenter
                     }
                     Text {
@@ -77,11 +78,11 @@ Module {
             leftPadding: 0
             rightPadding: 0
 
-            borderColor: AudioManager.sourceMuted ? Config.theme.getRed() : Config.theme.getBackground2()
+            borderColor: AudioManager.sourceMuted ? Settings.palette.red : Settings.palette.background2
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Text {
                         text: "Source Volume"
@@ -93,7 +94,7 @@ Module {
                 implicitWidth: 48
 
                 backgroundColor: "transparent"
-                fillColor: AudioManager.sourceMuted ? Config.theme.getRed() : Config.theme.getAccent()
+                fillColor: AudioManager.sourceMuted ? Settings.palette.red : Settings.palette.accent
 
                 radius: 0
                 borderWidth: 0

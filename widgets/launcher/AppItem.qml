@@ -3,9 +3,12 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
+
+
 
 Button {
     id: root
@@ -15,27 +18,27 @@ Button {
 
     implicitHeight: icon.implicitHeight + root.topPadding + root.bottomPadding
 
-    backgroundColor: highlighted ? Config.theme.getAccent( ) : Config.theme.getBackground1( )
-    backgroundHoverColor: highlighted ? Config.theme.getAccent( ) : Config.theme.getBackground2( )
-    backgroundPressColor: highlighted ? Config.theme.getAccent( ) : Config.theme.getBackground0( )
+    backgroundColor: highlighted ? Settings.palette.accent : Settings.palette.background1
+    backgroundHoverColor: highlighted ? Settings.palette.accent : Settings.palette.background2
+    backgroundPressColor: highlighted ? Settings.palette.accent : Settings.palette.background0
 
-    leftPadding: Config.theme.padding.normal
-    rightPadding: Config.theme.padding.normal
-    topPadding: Config.theme.padding.normal
-    bottomPadding: Config.theme.padding.normal
+    leftPadding: Settings.spacing.medium
+    rightPadding: Settings.spacing.medium
+    topPadding: Settings.spacing.medium
+    bottomPadding: Settings.spacing.medium
 
-    topLeftCornerRadius: Config.theme.cornerRadius.small
-    topRightCornerRadius: Config.theme.cornerRadius.small
-    bottomLeftCornerRadius: Config.theme.cornerRadius.small
-    bottomRightCornerRadius: Config.theme.cornerRadius.small
+    topLeftCornerRadius: Settings.radius.small
+    topRightCornerRadius: Settings.radius.small
+    bottomLeftCornerRadius: Settings.radius.small
+    bottomRightCornerRadius: Settings.radius.small
 
     RowLayout {
-        spacing: Config.theme.spacing.normal
+        spacing: Settings.spacing.medium
 
         IconImage {
             id: icon
 
-            source: Icons.getAppIcon( app.icon )
+            source: Icons.getAppIcon(app.icon)
             implicitSize: 36
 
             visible: backer.paintedWidth * backer.paintedHeight > 0
@@ -45,42 +48,42 @@ Button {
             spacing: 0
 
             Text {
-                text: interfaceWindow.getEntryTitleText( app )
+                text: interfaceWindow.getEntryTitleText(app)
 
                 Layout.fillWidth: true
 
-                color: highlighted ? Config.theme.getBackground0( ) : Config.theme.getForeground0( )
+                color: highlighted ? Settings.palette.background0 : Settings.palette.foreground0
 
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
             }
 
             Text {
-                text: interfaceWindow.getEntryDescriptionText( app )
-                font.pointSize: Config.theme.textSize.small
+                text: interfaceWindow.getEntryDescriptionText(app)
+                font.pointSize: Settings.fontSize.small
 
                 Layout.fillWidth: true
 
-                color: highlighted ? Config.theme.getBackground0( ) : Config.theme.getForeground2( )
+                color: highlighted ? Settings.palette.background0 : Settings.palette.foreground2
 
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: Text.AlignVCenter
 
                 elide: Text.ElideRight
 
-                visible: interfaceWindow.getEntryDescriptionText( app ) !== ""
+                visible: interfaceWindow.getEntryDescriptionText(app) !== ""
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
             }

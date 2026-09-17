@@ -3,6 +3,7 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -13,7 +14,9 @@ import qs.resources
 Module {
     id: root
 
-    onClicked: () => {}
+    onClicked: () => {
+        PanelManager.toggleSettingsOpen()
+    }
 
     areas: [
         ModuleArea {

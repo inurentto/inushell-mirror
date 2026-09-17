@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.notifications
@@ -27,14 +28,14 @@ Scope {
         }
 
         margins {
-            bottom: HyprlandManager.monitorHasFullscreen(HyprlandManager.monitorFor(screen)) ? 0 : -bar.height + Config.theme.spacing.big
+            bottom: HyprlandManager.monitorHasFullscreen(HyprlandManager.monitorFor(screen)) ? 0 : -bar.height + Settings.spacing.big
         }
 
-        implicitWidth: Config.notificationWidth + Config.theme.spacing.big * 2
+        implicitWidth: Config.notificationWidth + Settings.spacing.big * 2
         implicitHeight: HyprlandManager.monitorFor(screen).height
 
         mask: Region {
-            x: Config.theme.spacing.big; y: Config.theme.spacing.big
+            x: Settings.spacing.big; y: Settings.spacing.big
             width: Config.notificationWidth; height: Math.min(notificationListView.contentHeight, notificationListView.height)
         }
 
@@ -43,8 +44,8 @@ Scope {
 
         Behavior on margins.bottom {
             PropertyAnimation {
-                duration: Config.theme.animationSpeed.slow
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.slow
+                easing.type: Settings.animationEasing.easeOut
             }
         }
 
@@ -55,17 +56,17 @@ Scope {
                 values: NotificationsManager.popups.filter(n => true) // Fuckass hack to get ListView.onRemove working (cause otherwise it is counted as a ref not an actual value!!!)
             }
 
-            x: Config.theme.spacing.big
-            y: Config.theme.spacing.big
+            x: Settings.spacing.big
+            y: Settings.spacing.big
 
-            width: notificationsPanel.width - Config.theme.spacing.big * 2
-            height: notificationsPanel.height - Config.theme.spacing.big * 2 + (HyprlandManager.monitorHasFullscreen(HyprlandManager.monitorFor(notificationsPanel.screen)) ? 0 : -bar.height + Config.theme.spacing.big)
+            width: notificationsPanel.width - Settings.spacing.big * 2
+            height: notificationsPanel.height - Settings.spacing.big * 2 + (HyprlandManager.monitorHasFullscreen(HyprlandManager.monitorFor(notificationsPanel.screen)) ? 0 : -bar.height + Settings.spacing.big)
             clip: false
 
             orientation: Qt.Vertical
 
             displaced: Transition {
-                NumberAnimation { properties: "y"; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
+                NumberAnimation { properties: "y"; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
             }
 
             delegate: Item {
@@ -85,8 +86,8 @@ Scope {
                     id: removeAnimation
                     PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: true }
                     ParallelAnimation {
-                        NumberAnimation { target: wrapper; property: "x"; to: notificationListView.width; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
-                        NumberAnimation { target: wrapper; property: "opacity"; to: 0; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
+                        NumberAnimation { target: wrapper; property: "x"; to: notificationListView.width; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
+                        NumberAnimation { target: wrapper; property: "opacity"; to: 0; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
                     }
                     PropertyAction { target: wrapper; property: "ListView.delayRemove"; value: false }
                 }
@@ -94,8 +95,8 @@ Scope {
                 ParallelAnimation {
                     id: addAnimation
                     running: true
-                    NumberAnimation { target: wrapper; property: "x"; to: 0; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
-                    NumberAnimation { target: wrapper; property: "opacity"; to: 1; duration: Config.theme.animationSpeed.normal; easing.type: Config.theme.easingType }
+                    NumberAnimation { target: wrapper; property: "x"; to: 0; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
+                    NumberAnimation { target: wrapper; property: "opacity"; to: 1; duration: Settings.animationSpeed.normal; easing.type: Settings.animationEasing.easeOut }
                 }
 
                 NotificationBox {
@@ -116,8 +117,8 @@ Scope {
 
             Behavior on height {
                 PropertyAnimation {
-                    duration: Config.theme.animationSpeed.slow
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.slow
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
         }

@@ -1,18 +1,18 @@
 import QtQuick
 
+import qs.services
 import qs.singletons
 
 
 
 Text {
-    font.family: Config.theme.mainFont
-    font.pointSize: Config.theme.textSize.normal
-    font.bold: false
+    font.family: Settings.fonts.main
+    font.pointSize: Settings.fontSize.normal
 
     renderType: Text.NativeRendering
     renderTypeQuality: Text.VeryHighRenderTypeQuality
 
     antialiasing: true
 
-    color: Config.theme.getForeground0()
+    color: Settings.palette.foreground0
 }

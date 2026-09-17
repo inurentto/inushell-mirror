@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.resources
 import qs.widgets
@@ -28,7 +29,7 @@ Item {
     implicitHeight: childrenRect.height
 
     RowLayout {
-        spacing: Config.theme.spacing.small
+        spacing: Settings.spacing.small
 
         Repeater {
             id: repeater
@@ -46,10 +47,10 @@ Item {
                 toggleable: root.toggleable
                 isToggled: root.selectedIndex == index
 
-                topLeftCornerRadius: index == 0 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                topRightCornerRadius: index == repeater.count - 1 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                bottomLeftCornerRadius: index == 0 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                bottomRightCornerRadius: index == repeater.count - 1 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
+                topLeftCornerRadius: index == 0 ? Settings.radius.medium : Settings.radius.small
+                topRightCornerRadius: index == repeater.count - 1 ? Settings.radius.medium : Settings.radius.small
+                bottomLeftCornerRadius: index == 0 ? Settings.radius.medium : Settings.radius.small
+                bottomRightCornerRadius: index == repeater.count - 1 ? Settings.radius.medium : Settings.radius.small
 
                 onClicked: () => {
                     if (toggleable) root.selectedIndex = index

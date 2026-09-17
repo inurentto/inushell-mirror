@@ -4,6 +4,7 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -29,7 +30,7 @@ Module {
             }
 
             RowLayout {
-                spacing: Config.theme.spacing.big
+                spacing: Settings.spacing.big
                 
                 IconImage {
                     source: Icons.getAppIcon(HyprlandManager.activeToplevel?.wayland?.appId)
@@ -41,6 +42,7 @@ Module {
                 Text {
                     text: HyprlandManager.activeToplevel?.title ?? ""
                     verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
                 }
             }
         }

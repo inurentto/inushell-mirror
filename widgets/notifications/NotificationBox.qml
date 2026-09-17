@@ -4,6 +4,7 @@ import Quickshell.Services.Notifications
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.resources
 import qs.widgets
@@ -45,28 +46,28 @@ MouseArea {
 
         implicitWidth: root.width
 
-        color: Config.theme.getBackground1()
+        color: Settings.palette.background1
 
-        topLeftRadius: Config.theme.cornerRadius.big
-        topRightRadius: Config.theme.cornerRadius.big
-        bottomLeftRadius: Config.theme.cornerRadius.big
-        bottomRightRadius: Config.theme.cornerRadius.big
+        topLeftRadius: Settings.radius.big
+        topRightRadius: Settings.radius.big
+        bottomLeftRadius: Settings.radius.big
+        bottomRightRadius: Settings.radius.big
 
-        topMargin: Config.theme.padding.normal
-        bottomMargin: Config.theme.padding.normal
-        leftMargin: Config.theme.padding.normal
-        rightMargin: Config.theme.padding.normal
+        topMargin: Settings.spacing.medium
+        bottomMargin: Settings.spacing.medium
+        leftMargin: Settings.spacing.medium
+        rightMargin: Settings.spacing.medium
 
         ColumnLayout {
-            spacing: Config.theme.spacing.normal
+            spacing: Settings.spacing.medium
 
             RowLayout {
-                x: Config.theme.padding.normal
-                y: Config.theme.padding.normal
+                x: Settings.spacing.medium
+                y: Settings.spacing.medium
 
-                implicitWidth: root.width - Config.theme.padding.normal * 2
+                implicitWidth: root.width - Settings.spacing.medium * 2
 
-                spacing: Config.theme.spacing.normal
+                spacing: Settings.spacing.medium
                 
                 IconImage {
                     source: Icons.getAppIcon(notification.appIcon, notification.appName)
@@ -101,14 +102,14 @@ MouseArea {
             }
 
             RowLayout {
-                spacing: Config.theme.spacing.big
+                spacing: Settings.spacing.big
 
                 Layout.fillWidth: true
 
                 ClippingWrapperRectangle {
                     color: "transparent"
 
-                    radius: Config.theme.cornerRadius.normal
+                    radius: Settings.radius.medium
 
                     IconImage {
                         id: image
@@ -121,7 +122,7 @@ MouseArea {
                 }
 
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Layout.fillWidth: true
 
@@ -129,7 +130,7 @@ MouseArea {
                         Layout.fillWidth: true
 
                         text: notification.summary
-                        font.pointSize: Config.theme.textSize.smallTitle
+                        font.pointSize: Settings.fontSize.smallTitle
 
                         elide: Text.ElideRight
                     }
@@ -148,7 +149,7 @@ MouseArea {
 
             RowLayout {
                 id: actionButtonLayout
-                spacing: Config.theme.spacing.small
+                spacing: Settings.spacing.small
 
                 Repeater {
                     id: actionButtonRepeater
@@ -165,21 +166,21 @@ MouseArea {
 
                         implicitWidth: (container.width - container.leftMargin - container.rightMargin - actionButtonLayout.spacing * Math.max(actionButtonRepeater.count - 1, 0)) / actionButtonRepeater.count
 
-                        backgroundColor: Config.theme.getAccent()
+                        backgroundColor: Settings.palette.accent
 
                         RowLayout {
-                            spacing: Config.theme.spacing.normal
+                            spacing: Settings.spacing.medium
 
                             TintedIcon {
                                 source: Icons.getIcon(modelData.identifier)
-                                tint: actionButton.hovered ? Config.theme.getForeground0() : Config.theme.getBackground0()
+                                tint: actionButton.hovered ? Settings.palette.foreground0 : Settings.palette.background0
 
                                 visible: notification.hasActionIcons
 
                                 Behavior on tint {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }
@@ -188,13 +189,13 @@ MouseArea {
                                 Layout.fillWidth: true
                             
                                 text: modelData?.text ?? text
-                                color: actionButton.hovered ? Config.theme.getForeground0() : Config.theme.getBackground0()
+                                color: actionButton.hovered ? Settings.palette.foreground0 : Settings.palette.background0
                                 horizontalAlignment: notification.hasActionIcons ? Text.AlignLeft : Text.AlignHCenter
 
                                 Behavior on color {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }

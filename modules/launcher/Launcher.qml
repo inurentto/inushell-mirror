@@ -7,6 +7,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import QtQuick.Effects
 
+import qs.services
 import qs.singletons
 import qs.utils
 import qs.widgets
@@ -38,8 +39,8 @@ Scope {
 
             mask: Region { item: contentContainer }
 
-            implicitWidth: 768 + Config.theme.spacing.big * 2
-            implicitHeight: 548 + Config.theme.spacing.big * 2
+            implicitWidth: 768 + Settings.spacing.big * 2
+            implicitHeight: 548 + Settings.spacing.big * 2
 
             WlrLayershell.layer: WlrLayer.Overlay
 
@@ -60,7 +61,7 @@ Scope {
                 const searchResults = searcher.query(searchField.text)
                 try {
                     const evalResult = eval?.(searchField.text) // Using ?. to call eval indirectly, otherwise eval has access to variables like interfaceWindow.width
-                    if ( evalResult != undefined && evalResult !== "" ) {
+                    if ( evalResult != undefined && evalResult !== "") {
                         var evaluatedEntry = evaluationHolder.createObject(interfaceWindow, { result: evalResult })
 
                         searchResults.unshift(evaluatedEntry)
@@ -127,25 +128,25 @@ Scope {
                 readonly property real listImplicitHeight: resultsListView.contentHeight + contentLayout.spacing
                 readonly property real contentHeight: contentLayout.childrenRect.height - resultsListView.height + listImplicitHeight
 
-                x: Config.theme.spacing.big
-                y: interfaceWindow.height - height + yOffset - Config.theme.spacing.big
+                x: Settings.spacing.big
+                y: interfaceWindow.height - height + yOffset - Settings.spacing.big
 
-                implicitWidth: interfaceWindow.width - Config.theme.spacing.big * 2
-                implicitHeight: Math.min(interfaceWindow.height - Config.theme.spacing.big * 2, contentHeight)
+                implicitWidth: interfaceWindow.width - Settings.spacing.big * 2
+                implicitHeight: Math.min(interfaceWindow.height - Settings.spacing.big * 2, contentHeight)
 
-                topMargin: Config.theme.padding.normal
-                bottomMargin: Config.theme.padding.normal
-                leftMargin: Config.theme.padding.normal
-                rightMargin: Config.theme.padding.normal
+                topMargin: Settings.spacing.medium
+                bottomMargin: Settings.spacing.medium
+                leftMargin: Settings.spacing.medium
+                rightMargin: Settings.spacing.medium
 
-                color: Config.theme.getBackground0()
+                color: Settings.palette.background0
 
-                radius: Config.theme.cornerRadius.big
+                radius: Settings.radius.big
 
                 Behavior on implicitHeight {
                     PropertyAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
 
@@ -156,16 +157,16 @@ Scope {
                         property: "yOffset"
                         from: interfaceWindow.height
                         to: 0
-                        duration: Config.theme.animationSpeed.normal
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.normal
+                        easing.type: Settings.animationEasing.easeOut
                     }
                     PropertyAnimation {
                         target: contentContainer
                         property: "opacity"
                         from: 0
                         to: 1
-                        duration: Config.theme.animationSpeed.normal
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.normal
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
 
@@ -176,15 +177,15 @@ Scope {
                             target: contentContainer
                             property: "yOffset"
                             to: interfaceWindow.height
-                            duration: Config.theme.animationSpeed.normal
-                            easing.type: Config.theme.easingType
+                            duration: Settings.animationSpeed.normal
+                            easing.type: Settings.animationEasing.easeOut
                         }
                         PropertyAnimation {
                             target: contentContainer
                             property: "opacity"
                             to: 0
-                            duration: Config.theme.animationSpeed.normal
-                            easing.type: Config.theme.easingType
+                            duration: Settings.animationSpeed.normal
+                            easing.type: Settings.animationEasing.easeOut
                         }
                     }
                     PropertyAction { target: interfaceLoader; property: "activeAsync"; value: false }
@@ -193,7 +194,7 @@ Scope {
                 ColumnLayout {
                     id: contentLayout
 
-                    spacing: Config.theme.spacing.big
+                    spacing: Settings.spacing.big
 
                     StyledListView {
                         id: resultsListView
@@ -206,7 +207,7 @@ Scope {
 
                         reuseItems: false
 
-                        highlightMoveDuration: Config.theme.animationSpeed.veryFast
+                        highlightMoveDuration: Settings.animationSpeed.fast
 
                         orientation: Qt.Vertical
 
@@ -221,10 +222,10 @@ Scope {
                             app: modelData
                             highlighted: resultsListView.currentIndex == index
 
-                            topLeftCornerRadius: index === 0 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                            topRightCornerRadius: index === 0 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                            bottomLeftCornerRadius: index === resultsListView.count - 1 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                            bottomRightCornerRadius: index === resultsListView.count - 1 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
+                            topLeftCornerRadius: index === 0 ? Settings.radius.medium : Settings.radius.small
+                            topRightCornerRadius: index === 0 ? Settings.radius.medium : Settings.radius.small
+                            bottomLeftCornerRadius: index === resultsListView.count - 1 ? Settings.radius.medium : Settings.radius.small
+                            bottomRightCornerRadius: index === resultsListView.count - 1 ? Settings.radius.medium : Settings.radius.small
 
                             onClicked: () => {
                                 interfaceWindow.executeEntry(modelData)
@@ -241,7 +242,7 @@ Scope {
                         Layout.fillWidth: true
                         
                         text: "No results :("
-                        color: Config.theme.getForeground2()
+                        color: Settings.palette.foreground2
                         horizontalAlignment: Text.AlignHCenter
 
                         visible: interfaceWindow.results.length === 0
@@ -260,7 +261,7 @@ Scope {
 
                         placeholderText: "Search..."
 
-                        font.pointSize: Config.theme.textSize.smallTitle
+                        font.pointSize: Settings.fontSize.smallTitle
 
                         onAccepted: {
                             if (interfaceWindow.results.length > 0) {

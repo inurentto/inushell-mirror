@@ -1,6 +1,7 @@
 import Quickshell.Widgets
 import QtQuick
 
+import qs.services
 import qs.singletons
 import qs.widgets
 
@@ -9,39 +10,39 @@ import qs.widgets
 Control {
     id: root
 
-    property color backgroundColor: Config.theme.getBackground1()
-    property color backgroundHoverColor: Config.theme.getBackground1()
-    property color backgroundPressColor: Config.theme.getAccent()
-    property color backgroundBorderColor: Config.theme.getBackground2()
-    property color backgroundBorderHoverColor: Config.theme.getBorder()
-    property color backgroundBorderPressColor: Config.theme.getAccent()
+    property color backgroundColor: Settings.palette.background1
+    property color backgroundHoverColor: Settings.palette.background1
+    property color backgroundPressColor: Settings.palette.accent
+    property color backgroundBorderColor: Settings.palette.background2
+    property color backgroundBorderHoverColor: Settings.palette.border
+    property color backgroundBorderPressColor: Settings.palette.accent
 
-    property color knobColor: Config.theme.getForeground0();
-    property color knobHoverColor: Config.theme.getForeground0();
-    property color knobPressColor: Config.theme.getBackground0();
-    property color knobBorderColor: Config.theme.getForeground2();
-    property color knobBorderHoverColor: Config.theme.getForeground2();
-    property color knobBorderPressColor: Config.theme.getForeground2();
+    property color knobColor: Settings.palette.foreground0;
+    property color knobHoverColor: Settings.palette.foreground0;
+    property color knobPressColor: Settings.palette.background0;
+    property color knobBorderColor: Settings.palette.foreground2;
+    property color knobBorderHoverColor: Settings.palette.foreground2;
+    property color knobBorderPressColor: Settings.palette.foreground2;
 
     property int borderWidth: 0
 
-    property real topPadding: Config.theme.padding.normal
-    property real bottomPadding: Config.theme.padding.normal
-    property real leftPadding: Config.theme.padding.big
-    property real rightPadding: Config.theme.padding.big
+    property real topPadding: Settings.spacing.medium
+    property real bottomPadding: Settings.spacing.medium
+    property real leftPadding: Settings.spacing.big
+    property real rightPadding: Settings.spacing.big
 
     property bool isToggled: false
 
     signal toggled()
 
     state: {
-        if ( enabled ) {
-            if ( isToggled ) return "toggled"
-            if ( isHovered ) return "hovered"
+        if (enabled) {
+            if (isToggled) return "toggled"
+            if (isHovered) return "hovered"
 
             return "normal"
         } else {
-            if ( isToggled ) return "disabledToggled"
+            if (isToggled) return "disabledToggled"
 
             return "disabledNormal"
         }
@@ -51,7 +52,7 @@ Control {
             name: "toggled"
             PropertyChanges {
                 root {
-                    _modulation: Qt.rgba( 1, 1, 1, 1 )
+                    _modulation: Qt.rgba(1, 1, 1, 1)
                 }
 
                 backgroundRectangle {
@@ -71,7 +72,7 @@ Control {
             name: "hovered"
             PropertyChanges {
                 root {
-                    _modulation: Qt.rgba( 1, 1, 1, 1 )
+                    _modulation: Qt.rgba(1, 1, 1, 1)
                 }
 
                 backgroundRectangle {
@@ -91,7 +92,7 @@ Control {
             name: "normal"
             PropertyChanges {
                 root {
-                    _modulation: Qt.rgba( 1, 1, 1, 1 )
+                    _modulation: Qt.rgba(1, 1, 1, 1)
                 }
 
                 backgroundRectangle { 
@@ -208,14 +209,14 @@ Control {
 
         Behavior on color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
         Behavior on border.color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
 
@@ -236,21 +237,21 @@ Control {
 
             Behavior on x {
                 PropertyAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
 
             Behavior on color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
             Behavior on border.color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
         }

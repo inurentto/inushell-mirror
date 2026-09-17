@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -106,7 +107,7 @@ Module {
             panelContent: Component {
                 ClippingWrapperRectangle {
                     color: "transparent"
-                    radius: Config.theme.cornerRadius.normal
+                    radius: Settings.radius.medium
 
                     Image {
                         source: root.activePlayer.trackArtUrl
@@ -141,7 +142,7 @@ Module {
 
             panelContent: Component {
                 RowLayout {
-                    spacing: Config.theme.spacing.small
+                    spacing: Settings.spacing.small
 
                     Button {
                         enabled: MediaManager.players.length > 1
@@ -156,12 +157,12 @@ Module {
                     }
 
                     Item {
-                        implicitWidth: childrenRect.width + Config.theme.padding.normal * 2
+                        implicitWidth: childrenRect.width + Settings.spacing.medium * 2
 
                         RowLayout {
                             anchors.centerIn: parent
 
-                            spacing: Config.theme.spacing.normal
+                            spacing: Settings.spacing.medium
 
                             IconImage {
                                 source: Icons.getAppIcon(root.activePlayer.rawPlayer.identity)
@@ -194,7 +195,7 @@ Module {
             ProgressBar {
                 id: stateProgressBar
 
-                implicitWidth: textLength + Config.theme.padding.normal * 2
+                implicitWidth: textLength + Settings.spacing.medium * 2
 
                 showPercentage: true
                 customText: {
@@ -203,8 +204,8 @@ Module {
                 }
 
                 backgroundColor: "transparent"
-                fillColor: root.activePlayer.rawPlayer.isPlaying ? Config.theme.getAccent() : Config.theme.getBackground2()
-                percentageFillColor: root.activePlayer.rawPlayer.isPlaying ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                fillColor: root.activePlayer.rawPlayer.isPlaying ? Settings.palette.accent : Settings.palette.background2
+                percentageFillColor: root.activePlayer.rawPlayer.isPlaying ? Settings.palette.background0 : Settings.palette.foreground0
 
                 radius: 0
                 borderWidth: 0

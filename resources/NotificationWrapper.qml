@@ -1,6 +1,7 @@
 import Quickshell.Services.Notifications
 import QtQuick
 
+import qs.services
 import qs.singletons
 
 
@@ -38,46 +39,46 @@ QtObject {
         target: root.rawNotification
 
         function onClosed(): void {
-            root.close();
+            root.close()
         }
 
         function onSummaryChanged(): void {
-            root.summary = root.rawNotification.summary;
-            root.replayPopup();
+            root.summary = root.rawNotification.summary
+            root.replayPopup()
         }
 
         function onBodyChanged(): void {
-            root.body = root.rawNotification.body;
-            root.replayPopup();
+            root.body = root.rawNotification.body
+            root.replayPopup()
         }
 
         function onAppIconChanged(): void {
-            root.appIcon = root.rawNotification.appIcon;
+            root.appIcon = root.rawNotification.appIcon
         }
 
         function onAppNameChanged(): void {
-            root.appName = root.rawNotification.appName;
+            root.appName = root.rawNotification.appName
         }
 
         function onImageChanged(): void {
-            root.image = root.rawNotification.image;
-            root.replayPopup();
+            root.image = root.rawNotification.image
+            root.replayPopup()
         }
 
         function onExpireTimeoutChanged(): void {
-            root.expireTimeout = root.rawNotification.expireTimeout;
+            root.expireTimeout = root.rawNotification.expireTimeout
         }
 
         function onUrgencyChanged(): void {
-            root.urgency = root.rawNotification.urgency;
+            root.urgency = root.rawNotification.urgency
         }
 
         function onResidentChanged(): void {
-            root.resident = root.rawNotification.resident;
+            root.resident = root.rawNotification.resident
         }
 
         function onHasActionIconsChanged(): void {
-            root.hasActionIcons = root.rawNotification.hasActionIcons;
+            root.hasActionIcons = root.rawNotification.hasActionIcons
         }
 
         function onActionsChanged(): void {
@@ -86,19 +87,19 @@ QtObject {
     }
 
     function close(): void {
-        root.closed = true;
+        root.closed = true
     }
 
     function dismiss(): void {
-        root.close();
-        root.popup = false;
-        root.rawNotification.dismiss();
+        root.close()
+        root.popup = false
+        root.rawNotification.dismiss()
     }
 
     function replayPopup(): void {
-        root.popup = true;
-        root.startTimestamp = Date.now();
-        root.timer.restart();
+        root.popup = true
+        root.startTimestamp = Date.now()
+        root.timer.restart()
     }
 
     function registerActions(): void {

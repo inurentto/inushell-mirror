@@ -4,6 +4,7 @@ import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -45,13 +46,13 @@ Module {
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Text {
                         Layout.fillWidth: true
 
                         text: "Sink"
-                        font.pointSize: Config.theme.textSize.smallTitle
+                        font.pointSize: Settings.fontSize.smallTitle
                         horizontalAlignment: Text.AlignHCenter
                     }
                     Text {
@@ -78,11 +79,11 @@ Module {
             leftPadding: 0
             rightPadding: 0
 
-            borderColor: AudioManager.sinkMuted ? Config.theme.getRed() : Config.theme.getBackground2()
+            borderColor: AudioManager.sinkMuted ? Settings.palette.red : Settings.palette.background2
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     width: 300
 
@@ -92,7 +93,7 @@ Module {
                         model: Pipewire.nodes.values.filter(n => n.audio && n.isStream && n.isSink)
 
                         ColumnLayout {
-                            spacing: Config.theme.spacing.normal
+                            spacing: Settings.spacing.medium
 
                             required property var modelData
                             required property int index
@@ -121,7 +122,7 @@ Module {
                             }
 
                             RowLayout {
-                                spacing: Config.theme.spacing.normal
+                                spacing: Settings.spacing.medium
 
                                 IconImage {
                                     source: icon
@@ -136,7 +137,7 @@ Module {
                             }
 
                             RowLayout {
-                                spacing: Config.theme.spacing.normal
+                                spacing: Settings.spacing.medium
 
                                 Text {
                                     text: Math.floor(modelData.audio.volume * 100) + "%"
@@ -155,7 +156,7 @@ Module {
                                     maxValue: 1.5
                                     snapPoints: [ 0.5, 1 ]
 
-                                    fillColor: modelData.audio.volume > 1 ? Config.theme.getRed() : Config.theme.getAccent()
+                                    fillColor: modelData.audio.volume > 1 ? Settings.palette.red : Settings.palette.accent
 
                                     onMoved: (value) => {
                                         modelData.audio.volume = value
@@ -177,7 +178,7 @@ Module {
                 implicitWidth: 48
 
                 backgroundColor: "transparent"
-                fillColor: AudioManager.sinkMuted ? Config.theme.getRed() : Config.theme.getAccent()
+                fillColor: AudioManager.sinkMuted ? Settings.palette.red : Settings.palette.accent
 
                 radius: 0
                 borderWidth: 0

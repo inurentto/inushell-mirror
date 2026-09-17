@@ -3,6 +3,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -21,7 +22,7 @@ Module {
     property bool toggled: false
 
     onClicked: () => {
-        if (Config.modules.clock.behavior === Config.ClockModuleBehavior.Toggle) toggled = !toggled
+        if (Settings.raw.modules.clock.displayBehavior === Settings.ClockModuleDisplayBehavior.Toggle) toggled = !toggled
     }
 
     onEntered: () => {
@@ -33,15 +34,17 @@ Module {
 
     areas: [
         ModuleArea {
+            id: dateArea
+
             window: root.window
-            acceptedButtons: Config.modules.clock.behavior !== Config.ClockModuleBehavior.Toggle ? Qt.NoButton : Qt.LeftButton
+            acceptedButtons: Settings.raw.modules.clock.displayBehavior === Settings.ClockModuleDisplayBehavior.Toggle ? Qt.LeftButton : Qt.NoButton
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     RowLayout {
-                        spacing: Config.theme.spacing.small
+                        spacing: Settings.spacing.small
 
                         Button {
                             topRightCornerRadius: 0
@@ -124,7 +127,7 @@ Module {
                         DayOfWeekRow {
                             locale: grid.locale
 
-                            spacing: Config.theme.spacing.small
+                            spacing: Settings.spacing.small
 
                             delegate: Text {
                                 required property string shortName
@@ -142,7 +145,7 @@ Module {
                             year: grid.year
                             locale: grid.locale
 
-                            spacing: Config.theme.spacing.small
+                            spacing: Settings.spacing.small
 
                             delegate: Text {
                                 required property int weekNumber
@@ -159,18 +162,18 @@ Module {
                             month: root.selectedMonth
                             year: root.selectedYear
 
-                            spacing: Config.theme.spacing.small
+                            spacing: Settings.spacing.small
 
                             delegate: Button {
                                 required property var model
 
                                 opacity: grid.month !== model.month ? 0.5: 1
 
-                                backgroundColor: model.today ? Config.theme.getAccent() : Config.theme.getBackground1()
+                                backgroundColor: model.today ? Settings.palette.accent : Settings.palette.background1
 
                                 Text {
                                     text: model.day >= 10 ? model.day : "0" + model.day
-                                    color: model.today ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                                    color: model.today ? Settings.palette.background0 : Settings.palette.foreground0
                                 }
                             }
 
@@ -183,14 +186,23 @@ Module {
 
             Text {
                 text: {
-                    switch (Config.modules.clock.behavior) {
-                        case Config.ClockModuleBehavior.Full: return TimeManager.formattedTime + " - " + TimeManager.formattedDate
-                        case Config.ClockModuleBehavior.Hover: return !root.hovered ? TimeManager.formattedTime : TimeManager.formattedDate
-                        case Config.ClockModuleBehavior.Toggle: return !root.toggled ? TimeManager.formattedTime : TimeManager.formattedDate
+                    switch (Settings.raw.modules.clock.displayBehavior) {
+                        case Settings.ClockModuleDisplayBehavior.Full: return TimeManager.formattedTime + " - " + TimeManager.formattedDate
+                        case Settings.ClockModuleDisplayBehavior.Hover: return !root.hovered ? TimeManager.formattedTime : TimeManager.formattedDate
+                        case Settings.ClockModuleDisplayBehavior.Toggle: return !root.toggled ? TimeManager.formattedTime : TimeManager.formattedDate
                     }
                 }
                 verticalAlignment: Text.AlignVCenter
             }
         }
     ]
+
+    Connections {
+        target: Settings.raw.modules.clock
+
+        function onDisplayBehaviorChanged() {
+            if (Settings.raw.modules.clock.displayBehavior !== Settings.ClockModuleDisplayBehavior.Toggle) toggled = false
+            dateArea.acceptedButtons = Settings.raw.modules.clock.displayBehavior === Settings.ClockModuleDisplayBehavior.Toggle ? Qt.LeftButton : Qt.NoButton
+        }
+    }
 }

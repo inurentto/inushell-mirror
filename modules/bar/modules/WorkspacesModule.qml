@@ -3,6 +3,7 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -25,18 +26,18 @@ Module {
             property var workspace
 
             backgroundColor: {
-                if (workspace.urgent) return Config.theme.getOrange()
-                else if (workspace.focused) return Config.theme.getAccent()
-                else if (workspace.active) return Config.theme.getBackground2()
-                else Config.theme.getBackground1()
+                if (workspace.urgent) return Settings.palette.orange
+                else if (workspace.focused) return Settings.palette.accent
+                else if (workspace.active) return Settings.palette.background2
+                else Settings.palette.background1
             }
             backgroundHoverColor: {
-                if (workspace.focused) return Config.theme.getAccent()
-                else Config.theme.getBackground2()
+                if (workspace.focused) return Settings.palette.accent
+                else Settings.palette.background2
             }
             backgroundPressColor: {
-                if (workspace.focused) return Config.theme.getAccent()
-                else return Config.theme.getBackground0()
+                if (workspace.focused) return Settings.palette.accent
+                else return Settings.palette.background0
             }
 
             cursorShape: workspace.focused ? Qt.ArrowCursor : Qt.PointingHandCursor
@@ -56,16 +57,16 @@ Module {
 
                 text: workspace.name
                 color: {
-                    if (workspace.focused || workspace.urgent) return Config.theme.getBackground0()
-                    else return Config.theme.getForeground0()
+                    if (workspace.focused || workspace.urgent) return Settings.palette.background0
+                    else return Settings.palette.foreground0
                 }
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
             }

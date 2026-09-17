@@ -4,6 +4,7 @@ import Quickshell.Networking
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -26,13 +27,13 @@ Module {
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Text {
                         Layout.fillWidth: true
 
                         text: NetworkManager.activeWiredNetwork.name
-                        font.pointSize: Config.theme.textSize.smallTitle
+                        font.pointSize: Settings.fontSize.smallTitle
                         horizontalAlignment: Text.AlignHCenter
                     }
 
@@ -60,13 +61,13 @@ Module {
 
             panelContent: Component {
                 ColumnLayout {
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Text {
                         Layout.fillWidth: true
 
                         text: NetworkManager.activeWifiNetwork.name
-                        font.pointSize: Config.theme.textSize.smallTitle
+                        font.pointSize: Settings.fontSize.smallTitle
                         horizontalAlignment: Text.AlignHCenter
                     }
 

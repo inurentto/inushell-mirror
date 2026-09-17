@@ -1,6 +1,7 @@
 import Quickshell.Widgets
 import QtQuick
 
+import qs.services
 import qs.singletons
 import qs.widgets
 
@@ -9,25 +10,25 @@ import qs.widgets
 Control {
     id: root
 
-    property color backgroundColor: Config.theme.getBackground1()
-    property color backgroundHoverColor: Config.theme.getBackground1()
-    property color backgroundPressColor: Config.theme.getBackground1()
-    property color backgroundBorderColor: Config.theme.getBackground2()
-    property color backgroundBorderHoverColor: Config.theme.getBorder()
-    property color backgroundBorderPressColor: Config.theme.getBorder()
+    property color backgroundColor: Settings.palette.background1
+    property color backgroundHoverColor: Settings.palette.background1
+    property color backgroundPressColor: Settings.palette.background1
+    property color backgroundBorderColor: Settings.palette.background2
+    property color backgroundBorderHoverColor: Settings.palette.border
+    property color backgroundBorderPressColor: Settings.palette.border
 
-    property color knobColor: filled ? Config.theme.getBackground1() : Config.theme.getForeground0()
-    property color knobHoverColor: filled ? Config.theme.getBackground2() : Config.theme.getForeground1()
-    property color knobPressColor: filled ? Config.theme.getBackground0() : Config.theme.getAccent()
-    property color knobBorderColor: Config.theme.getForeground2()
-    property color knobBorderHoverColor: Config.theme.getForeground2()
-    property color knobBorderPressColor: Config.theme.getForeground2()
+    property color knobColor: filled ? Settings.palette.background1 : Settings.palette.foreground0
+    property color knobHoverColor: filled ? Settings.palette.background2 : Settings.palette.foreground1
+    property color knobPressColor: filled ? Settings.palette.background0 : Settings.palette.accent
+    property color knobBorderColor: Settings.palette.foreground2
+    property color knobBorderHoverColor: Settings.palette.foreground2
+    property color knobBorderPressColor: Settings.palette.foreground2
 
-    property color fillColor: Config.theme.getAccent()
-    property color fillBorderColor: Config.theme.getForeground2()
+    property color fillColor: Settings.palette.accent
+    property color fillBorderColor: Settings.palette.foreground2
 
-    property color snapColor: Config.theme.getForeground2()
-    property color snapActiveColor: filled ? Config.theme.getForeground0() : Config.theme.getBackground0()
+    property color snapColor: Settings.palette.foreground2
+    property color snapActiveColor: filled ? Settings.palette.foreground0 : Settings.palette.background0
 
     property int borderWidth: 0
 
@@ -239,8 +240,8 @@ Control {
 
         Behavior on smoothedValue {
             PropertyAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
 
@@ -257,18 +258,18 @@ Control {
                 width: borderWidth
             }
 
-            radius: Config.theme.cornerRadius.normal
+            radius: Settings.radius.medium
 
             Behavior on color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
             Behavior on border.color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
 
@@ -285,20 +286,20 @@ Control {
                     width: borderWidth
                 }
 
-                radius: Config.theme.cornerRadius.normal
+                radius: Settings.radius.medium
 
                 visible: filled
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
                 Behavior on border.color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
             }
@@ -317,18 +318,18 @@ Control {
                 width: borderWidth
             }
 
-            radius: Config.theme.cornerRadius.small
+            radius: Settings.radius.small
 
             Behavior on color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
             Behavior on border.color {
                 ColorAnimation {
-                    duration: Config.theme.animationSpeed.fast
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.fast
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
         }
@@ -355,19 +356,19 @@ Control {
                 implicitHeight: vertical ? snapLength : snapThickness
 
                 color: snapped ? snapActiveColor : snapColor
-                radius: Config.theme.cornerRadius.small
+                radius: Settings.radius.small
 
                 Behavior on color {
                     ColorAnimation {
-                        duration: Config.theme.animationSpeed.slow
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.slow
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
 
                 Behavior on snapThickness {
                     PropertyAnimation {
-                        duration: Config.theme.animationSpeed.slow
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.slow
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
             }

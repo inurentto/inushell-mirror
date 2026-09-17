@@ -34,7 +34,7 @@ Singleton {
         return playerPriority.indexOf(player.rawPlayer.identity.toLowerCase())
     }
 
-    function getHighestPriorityPlayer( ): MediaPlayer {
+    function getHighestPriorityPlayer(): MediaPlayer {
         var highestPriority = -1
         var highestPriorityPlayer = null
         players.forEach((player) => {
@@ -43,7 +43,7 @@ Singleton {
                 highestPriority = priority
                 highestPriorityPlayer = player
             }
-        } )
+        })
 
         return highestPriorityPlayer
     }
@@ -75,12 +75,12 @@ Singleton {
         }
     }
 
-    Component.onCompleted: ( ) => {
+    Component.onCompleted: () => {
         for (let index = 0; index < Mpris.players.values.length; index++) {
             createMediaPlayerWrapper(Mpris.players.values[index])
         }
 
-        setActivePlayer( players.indexOf( getHighestPriorityPlayer( ) ) )
+        setActivePlayer(players.indexOf(getHighestPriorityPlayer()))
     }
 
     Component {

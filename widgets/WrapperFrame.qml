@@ -1,5 +1,6 @@
 import Quickshell.Widgets
 
+import qs.services
 import qs.singletons
 
 
@@ -12,10 +13,10 @@ WrapperRectangle {
     property alias topPadding: root.topMargin
     property alias bottomPadding: root.bottomMargin
 
-    color: Config.theme.getBackground1( )
+    color: Settings.palette.background1
 
     border {
         width: 0
-        color: Config.theme.getBorder( )
+        color: Settings.palette.border
     }
 }

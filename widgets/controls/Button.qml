@@ -1,6 +1,7 @@
 import Quickshell.Widgets
 import QtQuick
 
+import qs.services
 import qs.singletons
 import qs.widgets
 
@@ -9,12 +10,12 @@ import qs.widgets
 Control {
     id: root
 
-    property color backgroundColor: Config.theme.getBackground1()
-    property color backgroundHoverColor: Config.theme.getBackground2()
-    property color backgroundPressColor: Config.theme.getBackground0()
-    property color borderColor: Config.theme.getBackground2()
-    property color borderHoverColor: Config.theme.getBorder()
-    property color borderPressColor: Config.theme.getAccent()
+    property color backgroundColor: Settings.palette.background1
+    property color backgroundHoverColor: Settings.palette.background2
+    property color backgroundPressColor: Settings.palette.background0
+    property color borderColor: Settings.palette.background2
+    property color borderHoverColor: Settings.palette.border
+    property color borderPressColor: Settings.palette.accent
 
     property int borderWidth: 0
 
@@ -27,10 +28,10 @@ Control {
     property alias implicitWidth: backgroundRectangle.implicitWidth
     property alias implicitHeight: backgroundRectangle.implicitHeight
 
-    property real topPadding: Config.theme.padding.normal
-    property real bottomPadding: Config.theme.padding.normal
-    property real leftPadding: Config.theme.padding.big
-    property real rightPadding: Config.theme.padding.big
+    property real topPadding: Settings.spacing.medium
+    property real bottomPadding: Settings.spacing.medium
+    property real leftPadding: Settings.spacing.big
+    property real rightPadding: Settings.spacing.big
 
     property bool toggleable: false
     property bool isToggled: false
@@ -158,18 +159,18 @@ Control {
             width: borderWidth
         }
 
-        radius: Config.theme.cornerRadius.normal
+        radius: Settings.radius.medium
 
         Behavior on color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
         Behavior on border.color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
     }

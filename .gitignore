@@ -1,1 +1,6 @@
-extension/build
+# Direnv
+.direnv
+
+# Build
+build
+result

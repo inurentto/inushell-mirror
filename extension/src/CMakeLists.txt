@@ -1,6 +1,14 @@
-qml_module(shell-extensions
-    URI ShellExtensions
+qml_module(inu-shell
+    URI InuShell
+	INCLUDE_PREFIX inu-shell
     VERSION ${PROJECT_VERSION}
     SOURCES
         key-lock.cpp
+	LIBRARIES
+		Qt::Quick
+)
+
+list(APPEND CMAKE_AUTOMOC_MACRO_NAMES
+    SETTINGS_NODE SETTINGS_NODE_NO_CTOR SETTINGS_LIST_TYPE
+    CONFIG_NODE CONFIG_NODE_NO_CTOR CONFIG_LIST_TYPE
 )

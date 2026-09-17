@@ -3,6 +3,7 @@ import QtQuick
 
 import ShellExtensions
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -22,11 +23,11 @@ Module {
 
             aspectRatio: 1
 
-            backgroundColor: KeyLock.capsLock ? Config.theme.getAccent() : Config.theme.getBackground1()
+            backgroundColor: KeyLock.capsLock ? Settings.palette.accent : Settings.palette.background1
 
             TintedIcon {
-                source: Icons.getIcon( "caps-lock-on" )
-                tint: KeyLock.capsLock ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                source: Icons.getIcon"caps-lock-on")
+                tint: KeyLock.capsLock ? Settings.palette.background0 : Settings.palette.foreground0
             }
         },
         ModuleArea {
@@ -37,11 +38,11 @@ Module {
 
             aspectRatio: 1
 
-            backgroundColor: KeyLock.numLock ? Config.theme.getAccent() : Config.theme.getBackground1()
+            backgroundColor: KeyLock.numLock ? Settings.palette.accent : Settings.palette.background1
 
             TintedIcon {
-                source: Icons.getIcon( "num-lock-on" )
-                tint: KeyLock.numLock ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                source: Icons.getIcon"num-lock-on")
+                tint: KeyLock.numLock ? Settings.palette.background0 : Settings.palette.foreground0
             }
         }
     ]

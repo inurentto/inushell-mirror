@@ -1,65 +1,22 @@
 {
-    description = "inushell";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
 
-    inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-        flake-utils.url = "github:numtide/flake-utils";
+  outputs = { self, nixpkgs, flake-parts } @ inputs: flake-parts.lib.mkFlake { inherit inputs; } {
+    perSystem = { config, pkgs, ... }: {
+      packages = rec {
+        inu-shell = pkgs.callPackage ./. {};
+        debug = inu-shell.override { debug = true; };
+        default = inu-shell;
+      };
+      devShells.default = pkgs.mkShell {
+        inputsFrom = [ config.packages.default config.packages.default.plugin ];
+        packages = [ config.packages.debug ];
+      };
     };
 
-    outputs = { self, nixpkgs, flake-utils }:
-        flake-utils.lib.eachDefaultSystem (system:
-        let
-            pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-            devShells.default = pkgs.mkShell {
-                buildInputs = with pkgs; [
-                    pkg-config
-                    cmake
-                    ninja
-                    clang
-
-                    qt6.qtbase
-                    qt6.qtdeclarative
-
-                    wayland
-                    wayland-scanner
-                    wayland-protocols
-                    dbus
-
-                    pipewire
-                    libpulseaudio
-                    ffmpeg
-                ];
-
-                shellHook = ''
-                    export QT_MULTIMEDIA_BACKEND="ffmpeg"
-                    export QT_PLUGIN_PATH="${pkgs.lib.makeSearchPath "lib/qt-6/plugins" (with pkgs; [
-                        qt6.qtbase
-                        qt6.qtdeclarative
-                    ])}"
-                    export QML_IMPORT_PATH="${pkgs.lib.makeSearchPath "lib/qt-6/qml" (with pkgs; [
-                        qt6.qtdeclarative
-                    ])}"
-                    export QML2_IMPORT_PATH="$QML_IMPORT_PATH"
-                    export QML_DISABLE_DISK_CACHE=1
-
-                    export LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath (with pkgs; [
-                        pipewire
-                        libpulseaudio
-                        ffmpeg
-                        libxkbcommon
-                    ])}:$LD_LIBRARY_PATH"
-                '';
-
-                configurePhase = ''
-                    cmake -B build -G "Ninja"
-                '';
-
-                buildPhase = ''
-                    cmake --build build
-                '';
-            };
-        }
-    );
+    systems = [ "x86_64-linux" ];
+  };
 }

@@ -11,7 +11,11 @@ import Quickshell.Wayland
 
 import Quickshell
 
+//import InuShell
+
 import qs.debug
+import qs.services
+import qs.modules.settings
 import qs.modules.bar
 import qs.modules.notifications
 import qs.modules.launcher
@@ -22,7 +26,11 @@ import qs.modules.polkit
 ShellRoot {
     id: root
 
+    settings.watchFiles: true
+
     //Widgets {}
+
+    SettingsWindow {}
 
     Bar {
         id: bar
@@ -35,8 +43,6 @@ ShellRoot {
     Launcher {}
 
     PolkitAgent {}
-
-
 
     LazyLoader {
         active: false

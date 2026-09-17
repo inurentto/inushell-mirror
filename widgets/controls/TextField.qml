@@ -2,6 +2,7 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
 
+import qs.services
 import qs.singletons
 import qs.widgets
 
@@ -10,17 +11,17 @@ import qs.widgets
 Control {
     id: root
 
-    property color backgroundColor: Config.theme.getBackground1()
-    property color backgroundHoverColor: Config.theme.getBackground1()
-    property color backgroundPressColor: Config.theme.getBackground1()
-    property color borderColor: Config.theme.getBackground2()
-    property color borderHoverColor: Config.theme.getBorder()
-    property color borderPressColor: Config.theme.getAccent()
+    property color backgroundColor: Settings.palette.background1
+    property color backgroundHoverColor: Settings.palette.background1
+    property color backgroundPressColor: Settings.palette.background1
+    property color borderColor: Settings.palette.background2
+    property color borderHoverColor: Settings.palette.border
+    property color borderPressColor: Settings.palette.accent
 
-    property color textColor: Config.theme.getForeground0()
-    property color placeholderTextColor: Config.theme.getBorder()
-    property color selectionColor: Config.theme.getAccent()
-    property color textSelectionColor: Config.theme.getBackground0()
+    property color textColor: Settings.palette.foreground0
+    property color placeholderTextColor: Settings.palette.border
+    property color selectionColor: Settings.palette.accent
+    property color textSelectionColor: Settings.palette.background0
 
     property alias color: textInput.color
 
@@ -37,10 +38,10 @@ Control {
     property alias implicitWidth: backgroundRectangle.implicitWidth
     property alias implicitHeight: backgroundRectangle.implicitHeight
 
-    property real topPadding: Config.theme.padding.small
-    property real bottomPadding: Config.theme.padding.small
-    property real leftPadding: Config.theme.padding.small
-    property real rightPadding: Config.theme.padding.small
+    property real topPadding: Settings.spacing.small
+    property real bottomPadding: Settings.spacing.small
+    property real leftPadding: Settings.spacing.small
+    property real rightPadding: Settings.spacing.small
 
     readonly property bool isFocused: textInput.cursorVisible
 
@@ -174,18 +175,18 @@ Control {
             width: borderWidth
         }
 
-        radius: Config.theme.cornerRadius.normal
+        radius: Settings.radius.medium
 
         Behavior on color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
         Behavior on border.color {
             ColorAnimation {
-                duration: Config.theme.animationSpeed.fast
-                easing.type: Config.theme.easingType
+                duration: Settings.animationSpeed.fast
+                easing.type: Settings.animationEasing.easeOut
             }
         }
 
@@ -203,7 +204,7 @@ Control {
             leftPadding: root.leftPadding
             rightPadding: root.rightPadding
 
-            font.pointSize: Config.theme.textSize.normal
+            font.pointSize: Settings.fontSize.normal
             verticalAlignment: Text.AlignVCenter
 
             onAccepted: () => root.accepted()

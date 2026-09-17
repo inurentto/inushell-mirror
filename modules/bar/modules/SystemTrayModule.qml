@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import QtQuick.Window
 import QtQuick.Effects
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -45,7 +46,7 @@ Module {
                     property list<QsMenuHandle> parents: []
                     property QsMenuHandle currentMenu: systemTrayItem.menu
                     
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     Item {
                         id: menuEntryContainer
@@ -60,7 +61,7 @@ Module {
 
                             implicitWidth: parent.width
 
-                            spacing: Config.theme.spacing.small
+                            spacing: Settings.spacing.small
 
                             Loader {
                                 property var index: -1
@@ -118,40 +119,40 @@ Module {
                                     bottomPadding: 4
 
                                     topLeftCornerRadius: {
-                                        if (index === -1) return Config.theme.cornerRadius.normal
-                                        if (index === 0) return Config.theme.cornerRadius.normal
+                                        if (index === -1) return Settings.radius.medium
+                                        if (index === 0) return Settings.radius.medium
 
                                         const lastEntry = menuOpener.children.values[index - 1]
-                                        if (lastEntry && lastEntry.isSeparator) return Config.theme.cornerRadius.normal
+                                        if (lastEntry && lastEntry.isSeparator) return Settings.radius.medium
 
-                                        return Config.theme.cornerRadius.small
+                                        return Settings.radius.small
                                     }
                                     topRightCornerRadius: {
-                                        if (index === -1) return Config.theme.cornerRadius.normal
-                                        if (index === 0) return Config.theme.cornerRadius.normal
+                                        if (index === -1) return Settings.radius.medium
+                                        if (index === 0) return Settings.radius.medium
 
                                         const lastEntry = menuOpener.children.values[index - 1]
-                                        if (lastEntry && lastEntry.isSeparator) return Config.theme.cornerRadius.normal
+                                        if (lastEntry && lastEntry.isSeparator) return Settings.radius.medium
 
-                                        return Config.theme.cornerRadius.small
+                                        return Settings.radius.small
                                     }
                                     bottomLeftCornerRadius: {
-                                        if (index === -1) return Config.theme.cornerRadius.normal
-                                        if (index === repeater.count - 1) return Config.theme.cornerRadius.normal
+                                        if (index === -1) return Settings.radius.medium
+                                        if (index === repeater.count - 1) return Settings.radius.medium
 
                                         const nextEntry = menuOpener.children.values[index + 1]
-                                        if (nextEntry && nextEntry.isSeparator) return Config.theme.cornerRadius.normal 
+                                        if (nextEntry && nextEntry.isSeparator) return Settings.radius.medium 
                                         
-                                        return Config.theme.cornerRadius.small
+                                        return Settings.radius.small
                                     }
                                     bottomRightCornerRadius: {
-                                        if (index === -1) return Config.theme.cornerRadius.normal
-                                        if (index === repeater.count - 1) return Config.theme.cornerRadius.normal
+                                        if (index === -1) return Settings.radius.medium
+                                        if (index === repeater.count - 1) return Settings.radius.medium
 
                                         const nextEntry = menuOpener.children.values[index + 1]
-                                        if (nextEntry && nextEntry.isSeparator) return Config.theme.cornerRadius.normal 
+                                        if (nextEntry && nextEntry.isSeparator) return Settings.radius.medium 
                                         
-                                        return Config.theme.cornerRadius.small
+                                        return Settings.radius.small
                                     }
 
                                     onClicked: () => {
@@ -169,7 +170,7 @@ Module {
                                     RowLayout {
                                         id: buttonContent
 
-                                        spacing: Config.theme.spacing.normal
+                                        spacing: Settings.spacing.medium
 
                                         TintedIcon {
                                             source: index === -1 ? Icons.getIcon("arrow-left") : modelData.icon
@@ -178,7 +179,7 @@ Module {
 
                                         Text {
                                             text: modelData.text
-                                            font.pointSize: Config.theme.textSize.small
+                                            font.pointSize: Settings.fontSize.small
                                         }
 
                                         Item {

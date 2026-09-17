@@ -3,7 +3,9 @@ import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
+import qs.components.controls
 import qs.widgets
 import qs.widgets.controls
 import qs.resources
@@ -41,15 +43,19 @@ Item {
         return areaVisible
     }
     
-    signal clicked( MouseEvent mouse, ModuleArea area, int index )
-    signal wheel( WheelEvent wheel, ModuleArea area, int index )
-    signal entered( ModuleArea area, int index )
-    signal exited( ModuleArea area, int index )
+    signal clicked(MouseEvent mouse, ModuleArea area, int index)
+    signal wheel(WheelEvent wheel, ModuleArea area, int index)
+    signal entered(ModuleArea area, int index)
+    signal exited(ModuleArea area, int index)
 
     clip: false
 
+    StyledButtonGroup {
+        id: moduleButtonGroup
+    }
+
     RowLayout {
-        spacing: Config.theme.spacing.small
+        spacing: Settings.spacing.small
 
         Repeater {
             id: repeater
@@ -64,7 +70,7 @@ Item {
                 content: modelData.content
 
                 implicitWidth: {
-                    if ( modelData.aspectRatio ) {
+                    if (modelData.aspectRatio) {
                         return implicitHeight / modelData.aspectRatio
                     }
                 }
@@ -79,10 +85,10 @@ Item {
                 leftPadding: modelData.leftPadding
                 rightPadding: modelData.rightPadding
 
-                topLeftCornerRadius: index === 0 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                topRightCornerRadius: index === repeater.count - 1 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                bottomLeftCornerRadius: index === 0 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
-                bottomRightCornerRadius: index === repeater.count - 1 ? Config.theme.cornerRadius.normal : Config.theme.cornerRadius.small
+                topLeftCornerRadius: index === 0 ? Settings.radius.medium : Settings.radius.small
+                topRightCornerRadius: index === repeater.count - 1 ? Settings.radius.medium : Settings.radius.small
+                bottomLeftCornerRadius: index === 0 ? Settings.radius.medium : Settings.radius.small
+                bottomRightCornerRadius: index === repeater.count - 1 ? Settings.radius.medium : Settings.radius.small
 
                 backgroundColor: modelData.backgroundColor
                 backgroundHoverColor: modelData.backgroundHoverColor
@@ -93,16 +99,16 @@ Item {
 
                 cursorShape: modelData.cursorShape
 
-                onClicked: ( mouse ) => root.clicked( mouse, modelData, index )
-                onWheel: ( wheel ) => root.wheel( wheel, modelData, index )
-                onEntered: ( ) => {
-                    if ( modelData.panelContent !== null ) PanelManager.openPanel( modelData )
-                    else PanelManager.forceClosePanel( )
-                    root.entered( modelData, index )
+                onClicked: (mouse) => root.clicked(mouse, modelData, index)
+                onWheel: (wheel) => root.wheel(wheel, modelData, index)
+                onEntered: () => {
+                    if (modelData.panelContent !== null) PanelManager.openPanel(modelData)
+                    else PanelManager.forceClosePanel()
+                    root.entered(modelData, index)
                 }
-                onExited: ( ) => {
-                    if ( modelData.panelContent !== null ) PanelManager.panelFocusLost( )
-                    root.exited( modelData, index )
+                onExited: () => {
+                    if (modelData.panelContent !== null) PanelManager.panelFocusLost()
+                    root.exited(modelData, index)
                 }
             }
         }

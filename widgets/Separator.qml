@@ -1,12 +1,13 @@
 import QtQuick
 
+import qs.services
 import qs.singletons
 
 
 
 Item {
     property bool vertical: false
-    property real margin: Config.theme.spacing.normal
+    property real margin: Settings.spacing.medium
 
     implicitWidth: Config.theme.borderWidth.normal
     implicitHeight: Config.theme.borderWidth.normal
@@ -17,7 +18,7 @@ Item {
         implicitWidth: vertical ? Config.theme.borderWidth.normal : parent.width - parent.margin * 2
         implicitHeight: vertical ? parent.height - parent.margin * 2 : Config.theme.borderWidth.normal
 
-        color: Config.theme.getBackground2( )
+        color: Settings.palette.background2
 
         radius: vertical ? implicitWidth : implicitHeight
     }

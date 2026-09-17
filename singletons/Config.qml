@@ -44,7 +44,7 @@ Singleton {
         shadowOpacity: 0.75,
 
         colorScheme: root.colorSchemes.catppuccinMocha,
-        mainFont: "JetBrainsMono Nerd Font Mono",
+        mainFont: "JetBrainsMono Nerd Font Propo",
         monoFont: "JetBrainsMono Nerd Font Mono",
 
         getBackground0: () => root.theme.colorScheme[root.theme.background0],
@@ -101,6 +101,7 @@ Singleton {
         },
 
         textSize: {
+            bigTitle: 24,
             smallTitle: 13,
             normal: 11,
             small: 10

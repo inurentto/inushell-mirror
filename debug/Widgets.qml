@@ -1,315 +1,378 @@
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Wayland
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 
+import qs.services
 import qs.singletons
-
-import qs.widgets
-import qs.widgets.controls
-import qs.widgets.bar
-import qs.widgets.notifications
-import qs.resources
-
+import qs.components
+import qs.components.controls
 
 
 
 FloatingWindow {
     id: root
 
-    readonly property color _color: Config.theme.getBackground0()
-    color: Qt.rgba(
-        _color.r,
-        _color.g,
-        _color.b,
-        0
-    )
+    color: Settings.palette.background0
 
-    Item {
-        x: 10
-        y: 10
+    WrapperItem {
+        margin: Settings.spacing.big
 
-        implicitWidth: parent.width - 10 * 2
-        implicitHeight: parent.height - 10 * 2
+        Column {
+            spacing: Settings.spacing.big
 
-        ColumnLayout {
-            RowLayout {
-                Switch {
-                    id: disableToggle
+            StyledText {
+                text: "Shader Test"
+            }
 
-                    isToggled: false
-                }
+            Image {
+                id: shaderTestImage
 
-                Text {
-                    text: "Disable Controls"
+                source: Icons.getIcon("auth-sim-locked-symbolic")
+
+                layer.enabled: true
+                layer.effect: ShaderEffect {
+                    property color color: Settings.palette.foreground0
+                    fragmentShader: "TestShader.frag.qsb"
+                    blending: true
                 }
             }
 
-            Text {
+            StyledText {
                 text: "Buttons"
             }
 
-            RowLayout {
-                Button {
-                    enabled: !disableToggle.isToggled
+            Column {
+                spacing: Settings.spacing.big
 
-                    Text {
-                        text: "Button"
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledButton {
+                        text: "button"
+
+                        onClicked: () => {
+                            console.log("clicked")
+                        }
+                    }
+                    StyledButton {
+                        enabled: false
+                        text: "button"
                     }
                 }
-                Button {
-                    enabled: !disableToggle.isToggled
-                    toggleable: true
-                    isToggled: true
+                Row {
+                    spacing: Settings.spacing.big
 
-                    Text {
-                        text: "Toggle"
+                    StyledButton {
+                        text: "icon"
+                        icon: Icons.getIcon("preferences-system-symbolic")
+                    }
+                    StyledButton {
+                        enabled: false
+                        text: "icon"
+                        icon: Icons.getIcon("preferences-system-symbolic")
+                    }
+                }
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledButton {
+                        flat: true
+                        text: "flat"
+                    }
+                    StyledButton {
+                        enabled: false
+                        flat: true
+                        text: "flat"
+                    }
+                }
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledButton {
+                        id: toggleButtonNoIcon
+                        checkable: true
+                        text: "button toggle"
+                    }
+                    StyledButton {
+                        enabled: false
+                        checkable: true
+                        checked: toggleButtonNoIcon.checked
+                        text: "button toggle"
+                    }
+                }
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledButton {
+                        id: toggleButtonIcon
+                        checkable: true
+                        text: "icon toggle"
+                        icon: Icons.getIcon("preferences-system-symbolic")
+                    }
+                    StyledButton {
+                        enabled: false
+                        checkable: true
+                        checked: toggleButtonIcon.checked
+                        text: "icon toggle"
+                        icon: Icons.getIcon("preferences-system-symbolic")
+                    }
+                }
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledButton {
+                        id: toggleButtonFlat
+                        flat: true
+                        checkable: true
+                        text: "flat toggle"
+                    }
+                    StyledButton {
+                        enabled: false
+                        checkable: true
+                        checked: toggleButtonFlat.checked
+                        flat: true
+                        text: "flat toggle"
                     }
                 }
             }
 
-            Text {
+            StyledText {
+                text: "Button Groups"
+            }
+
+            Row {
+                spacing: Settings.spacing.big
+
+                Column {
+                    spacing: Settings.spacing.small
+
+                    StyledButtonGroup {
+                        id: columnButtonGroup
+                        exclusive: true
+                    }
+
+                    StyledButton {
+                        text: "1"
+                        checkable: true
+                        checked: true
+
+                        buttonGroup: columnButtonGroup
+                    }
+                    StyledButton {
+                        text: "2"
+                        checkable: true
+
+                        buttonGroup: columnButtonGroup
+                    }
+                    StyledButton {
+                        text: "3"
+                        checkable: true
+
+                        buttonGroup: columnButtonGroup
+                    }
+                }
+
+                RowLayout {
+                    width: 500
+
+                    spacing: Settings.spacing.small
+
+                    StyledButtonGroup {
+                        id: rowButtonGroup
+                        exclusive: false
+                    }
+
+                    StyledButton {
+                        Layout.fillWidth: true
+
+                        text: "1"
+                        checkable: true
+                        checked: true
+
+                        buttonGroup: rowButtonGroup
+                    }
+                    StyledButton {
+                        Layout.fillWidth: true
+
+                        text: "2"
+                        checkable: true
+
+                        buttonGroup: rowButtonGroup
+                    }
+                    StyledButton {
+                        Layout.fillWidth: true
+
+                        text: "3"
+                        checkable: true
+
+                        buttonGroup: rowButtonGroup
+                    }
+                }
+            }
+
+            StyledText {
                 text: "Switches"
             }
 
-            RowLayout {
-                Switch {
-                    enabled: !disableToggle.isToggled
+            Column {
+                spacing: Settings.spacing.big
+
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledSwitch {
+                        id: switchNoText
+                    }
+                    StyledSwitch {
+                        enabled: false
+                        checked: switchNoText.checked
+                    }
+                }
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledSwitch {
+                        id: switchText
+                        text: "switch"
+                    }
+                    StyledSwitch {
+                        text: "switch"
+                        enabled: false
+                        checked: switchText.checked
+                    }
                 }
             }
 
-            Text {
-                text: "Sliders & Progress Bars"
+            StyledText {
+                text: "Sliders"
             }
 
-            RowLayout {
-                ColumnLayout {
-                    Slider {
-                        value: progressBar.value
-                        enabled: !disableToggle.isToggled
+            Row {
+                spacing: Settings.spacing.big
 
-                        snapPoints: [ 0.25, 0.5, 0.75 ]
+                Column {
+                    spacing: Settings.spacing.big
 
-                        onMoved: (value) => {
-                            progressBar.value = value
-                        }
+                    StyledSlider {
+                        onMoved: (movedValue) => { value = movedValue; disabledFilledSlider.value = movedValue }
                     }
-                    Slider {
-                        value: progressBarFlipped.value
-                        enabled: !disableToggle.isToggled
+                    StyledSlider {
+                        filled: false
+
+                        onMoved: (movedValue) => { value = movedValue; disabledSlider.value = movedValue }
+                    }
+                    StyledSlider {
                         flip: true
 
-                        snapPoints: [ 0.25, 0.5, 0.75 ]
-
-                        onMoved: (value) => {
-                            progressBarFlipped.value = value
-                        }
+                        onMoved: (movedValue) => { value = movedValue; disabledFlippedFilledSlider.value = movedValue }
                     }
-                }
-                ColumnLayout {
-                    Slider {
-                        value: progressBarNoPercentage.value
-                        enabled: !disableToggle.isToggled
-                        filled: true
-
-                        snapPoints: [ 0.25, 0.5, 0.75 ]
-
-                        onMoved: (value) => {
-                            progressBarNoPercentage.value = value
-                        }
-                    }
-                    Slider {
-                        value: progressBarNoPercentageFlipped.value
-                        enabled: !disableToggle.isToggled
-                        filled: true
+                    StyledSlider {
+                        filled: false
                         flip: true
 
-                        snapPoints: [ 0.25, 0.5, 0.75 ]
+                        onMoved: (movedValue) => { value = movedValue; disabledFlippedSlider.value = movedValue }
+                    }
+                }
+                Row {
+                    spacing: Settings.spacing.big
 
-                        onMoved: (value) => {
-                            progressBarNoPercentageFlipped.value = value
-                        }
+                    StyledSlider {
+                        vertical: true
+
+                        onMoved: (movedValue) => { value = movedValue; disabledVerticalFilledSlider.value = movedValue }
+                    }
+                    StyledSlider {
+                        vertical: true
+                        filled: false
+
+                        onMoved: (movedValue) => { value = movedValue; disabledVerticalSlider.value = movedValue }
+                    }
+                    StyledSlider {
+                        vertical: true
+                        flip: true
+
+                        onMoved: (movedValue) => { value = movedValue; disabledFlippedFilledVerticalSlider.value = movedValue }
+                    }
+                    StyledSlider {
+                        vertical: true
+                        filled: false
+                        flip: true
+
+                        onMoved: (movedValue) => { value = movedValue; disabledFlippedVerticalSlider.value = movedValue }
                     }
                 }
 
-                Slider {
-                    value: progressBarVertical.value
-                    enabled: !disableToggle.isToggled
-                    vertical: true
+                Column {
+                    spacing: Settings.spacing.big
 
-                    snapPoints: [ 0.25, 0.5, 0.75 ]
-
-                    onMoved: (value) => {
-                        progressBarVertical.value = value
+                    StyledSlider {
+                        id: disabledFilledSlider
+                        enabled: false
                     }
-                }
-                Slider {
-                    value: progressBarVerticalFlipped.value
-                    enabled: !disableToggle.isToggled
-                    vertical: true
-                    flip: true
-
-                    snapPoints: [ 0.25, 0.5, 0.75 ]
-
-                    onMoved: (value) => {
-                        progressBarVerticalFlipped.value = value
+                    StyledSlider {
+                        id: disabledSlider
+                        enabled: false
+                        filled: false
                     }
-                }
-                Slider {
-                    value: progressBarVerticalNoPercentage.value
-                    enabled: !disableToggle.isToggled
-                    vertical: true
-                    filled: true
-
-                    snapPoints: [ 0.25, 0.5, 0.75 ]
-
-                    onMoved: (value) => {
-                        progressBarVerticalNoPercentage.value = value
+                    StyledSlider {
+                        id: disabledFlippedFilledSlider
+                        enabled: false
+                        flip: true
                     }
-                }
-                Slider {
-                    value: progressBarVerticalNoPercentageFlipped.value
-                    enabled: !disableToggle.isToggled
-                    vertical: true
-                    filled: true
-                    flip: true
-
-                    snapPoints: [ 0.25, 0.5, 0.75 ]
-
-                    onMoved: (value) => {
-                        progressBarVerticalNoPercentageFlipped.value = value
-                    }
-                }
-            }
-            RowLayout {
-                ColumnLayout {
-                    ProgressBar {
-                        id: progressBar
-                        implicitHeight: 32
-                    }
-                    ProgressBar {
-                        id: progressBarFlipped
-                        implicitHeight: 32
+                    StyledSlider {
+                        id: disabledFlippedSlider
+                        enabled: false
+                        filled: false
                         flip: true
                     }
                 }
-                ColumnLayout {
-                    ProgressBar {
-                        id: progressBarNoPercentage
-                        showPercentage: false
+                Row {
+                    spacing: Settings.spacing.big
+
+                    StyledSlider {
+                        id: disabledVerticalFilledSlider
+                        enabled: false
+                        vertical: true
                     }
-                    ProgressBar {
-                        id: progressBarNoPercentageFlipped
-                        showPercentage: false
+                    StyledSlider {
+                        id: disabledVerticalSlider
+                        enabled: false
+                        vertical: true
+                        filled: false
+                    }
+                    StyledSlider {
+                        id: disabledFlippedFilledVerticalSlider
+                        enabled: false
+                        vertical: true
+                        flip: true
+                    }
+                    StyledSlider {
+                        id: disabledFlippedVerticalSlider
+                        enabled: false
+                        vertical: true
+                        filled: false
                         flip: true
                     }
                 }
-
-                ProgressBar {
-                    id: progressBarVertical
-                    implicitWidth: 32
-                    vertical: true
-                }
-                ProgressBar {
-                    id: progressBarVerticalFlipped
-                    implicitWidth: 32
-                    vertical: true
-                    flip: true
-                }
-
-                ProgressBar {
-                    id: progressBarVerticalNoPercentage
-                    showPercentage: false
-                    vertical: true
-                }
-                ProgressBar {
-                    id: progressBarVerticalNoPercentageFlipped
-                    showPercentage: false
-                    vertical: true
-                    flip: true
-                }
             }
 
-            Text {
-                text: "Button Bar"
+            StyledText {
+                text: "Text Fields"
             }
-            ButtonBar {
-                enabled: !disableToggle.isToggled
 
-                ButtonBarItem {
-                    Text {
-                        text: "Hi"
-                    }
+            Row {
+                spacing: Settings.spacing.big
+
+                StyledTextField {
+                    id: enabledTextField
                 }
-                ButtonBarItem {
-                    Text {
-                        text: "Hi"
-                    }
+                StyledTextField {
+                    text: enabledTextField.text
+                    enabled: false
                 }
-                ButtonBarItem {
-                    Text {
-                        text: "Hi"
-                    }
-                }
-            }
-            ButtonBar {
-                id: buttonBar
-                toggleable: true
-
-                ButtonBarItem {
-                    Text {
-                        text: "Hi"
-                    }
-                }
-                ButtonBarItem {
-                    Text {
-                        text: "Hi"
-                    }
-                }
-                ButtonBarItem {
-                    Text {
-                        text: "Hi"
-                    }
-                }
-
-                enabled: !disableToggle.isToggled
-            }
-            Text {
-                text: "Selected: " + buttonBar.selectedIndex
-            }
-
-            Text {
-                text: "Text Field"
-            }
-            TextField {
-                implicitWidth: 512
-            }
-
-            Text {
-                text: "Bar Module"
-            }
-            Module {
-                implicitHeight: 36
-
-                areas: [
-                    ModuleArea {
-                        Rectangle {
-                            implicitWidth: 32
-                            implicitHeight: 32
-                            
-                            color: "red"
-                        }
-                    },
-
-                    ModuleArea {
-                        Rectangle {
-                            implicitWidth: 32
-                            implicitHeight: 32
-
-                            color: "blue"
-                        }
-                    }
-                ]
             }
         }
     }

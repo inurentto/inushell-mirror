@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.controls
@@ -42,12 +43,12 @@ Module {
                         blockButton.isToggled = bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.blocked
                     }
 
-                    spacing: Config.theme.spacing.normal
+                    spacing: Settings.spacing.medium
 
                     RowLayout {
                         id: actionRow
 
-                        spacing: Config.theme.spacing.normal
+                        spacing: Settings.spacing.medium
 
                         Button {
                             id: connectionButton
@@ -71,7 +72,7 @@ Module {
                                     }
                                 }
 
-                                readonly property color _color: Config.theme.getForeground0()
+                                readonly property color _color: Settings.palette.foreground0
                                 color: {
                                     return Qt.rgba(
                                         _color.r * connectionButton.modulation.r,
@@ -83,8 +84,8 @@ Module {
 
                                 Behavior on color {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }
@@ -109,7 +110,7 @@ Module {
                                     else return "Pair"
                                 }
 
-                                readonly property color _color: Config.theme.getForeground0()
+                                readonly property color _color: Settings.palette.foreground0
                                 color: {
                                     return Qt.rgba(
                                         _color.r * pairingButton.modulation.r,
@@ -121,8 +122,8 @@ Module {
 
                                 Behavior on color {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }
@@ -136,7 +137,7 @@ Module {
 
                             toggleable: true
 
-                            backgroundPressColor: Config.theme.getGreen()
+                            backgroundPressColor: Settings.palette.green
 
                             onToggled: () => {
                                 bluetoothDeviceList.currentItem.device.trusted = isToggled
@@ -144,7 +145,7 @@ Module {
 
                             Text {
                                 text: bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.trusted ? "Trusted" : "Trust"
-                                readonly property color _color: bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.trusted ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                                readonly property color _color: bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.trusted ? Settings.palette.background0 : Settings.palette.foreground0
                                 color: {
                                     return Qt.rgba(
                                         _color.r * trustButton.modulation.r,
@@ -156,8 +157,8 @@ Module {
                                 
                                 Behavior on color {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }
@@ -171,7 +172,7 @@ Module {
 
                             toggleable: true
 
-                            backgroundPressColor: Config.theme.getRed()
+                            backgroundPressColor: Settings.palette.red
 
                             onToggled: () => {
                                 bluetoothDeviceList.currentItem.device.blocked = isToggled
@@ -179,7 +180,7 @@ Module {
 
                             Text {
                                 text: bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.blocked ? "Unblock" : "Block"
-                                readonly property color _color: bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.blocked ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                                readonly property color _color: bluetoothDeviceList.currentItem && bluetoothDeviceList.currentItem.device.blocked ? Settings.palette.background0 : Settings.palette.foreground0
                                 color: {
                                     return Qt.rgba(
                                         _color.r * blockButton.modulation.r,
@@ -191,8 +192,8 @@ Module {
                                 
                                 Behavior on color {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }
@@ -223,7 +224,7 @@ Module {
                             visible: !panel.additionalActionsShown
                             toggleable: true
 
-                            backgroundPressColor: Config.theme.getAccent()
+                            backgroundPressColor: Settings.palette.accent
 
                             onToggled: () => {
                                 Bluetooth.defaultAdapter.discovering = isToggled
@@ -231,7 +232,7 @@ Module {
 
                             Text {
                                 text: Bluetooth.defaultAdapter.discovering ? "Stop Discovering" : "Discover"
-                                readonly property color _color: Bluetooth.defaultAdapter.discovering ? Config.theme.getBackground0() : Config.theme.getForeground0()
+                                readonly property color _color: Bluetooth.defaultAdapter.discovering ? Settings.palette.background0 : Settings.palette.foreground0
                                 color: {
                                     return Qt.rgba(
                                         _color.r * discoverButton.modulation.r,
@@ -243,8 +244,8 @@ Module {
                                 
                                 Behavior on color {
                                     ColorAnimation {
-                                        duration: Config.theme.animationSpeed.fast
-                                        easing.type: Config.theme.easingType
+                                        duration: Settings.animationSpeed.fast
+                                        easing.type: Settings.animationEasing.easeOut
                                     }
                                 }
                             }
@@ -299,7 +300,7 @@ Module {
                 Text {
                     text: BluetoothManager.mainAdapter?.enabled ? BluetoothManager.connectedDevices.length : "Disabled"
                     verticalAlignment: Text.AlignVCenter
-                    color: PanelManager.currentOpenPanel === "performance" ? Config.theme.getAccent() : Config.theme.getForeground0()
+                    color: PanelManager.currentOpenPanel === "performance" ? Settings.palette.accent : Settings.palette.foreground0
                 }
             }
         }

@@ -1,5 +1,6 @@
 import QtQuick
 
+import qs.services
 import qs.singletons
 
 
@@ -7,7 +8,7 @@ import qs.singletons
 ListView {
     boundsBehavior: Flickable.StopAtBounds
 
-    spacing: Config.theme.spacing.normal
+    spacing: Settings.spacing.medium
 
     clip: true
 }

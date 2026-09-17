@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
 
+import qs.services
 import qs.singletons
 import qs.widgets
 import qs.widgets.bar
@@ -17,7 +18,7 @@ import qs.modules.bar.modules
 Scope {
     id: root
 
-    readonly property int height: Config.barHeight + Config.theme.padding.normal * 2 + Config.theme.padding.big * 2
+    readonly property int height: Config.barHeight + Settings.spacing.medium * 2 + Settings.spacing.big * 2
     readonly property list<PanelWindow> windows: barVariants.instances
 
     Variants {
@@ -44,36 +45,39 @@ Scope {
                 top: barWindow.barTucked ? -bar.height : 0
             }
 
-            exclusiveZone: height - margins.top - (barWindow.barTucked ? height - Config.theme.spacing.big : 0)
+            exclusiveZone: height - margins.top - (barWindow.barTucked ? height - Settings.spacing.big : 0)
             WlrLayershell.layer: WlrLayer.Overlay
 
             implicitHeight: root.height
 
             Behavior on margins.top {
                 PropertyAnimation {
-                    duration: Config.theme.animationSpeed.slow
-                    easing.type: Config.theme.easingType
+                    duration: Settings.animationSpeed.slow
+                    easing.type: Settings.animationEasing.easeOut
                 }
             }
 
             Rectangle {
                 id: barRectangle
 
-                x: Config.theme.padding.big
-                y: Config.theme.padding.big
+                x: Settings.spacing.big
+                y: Settings.spacing.big
 
-                implicitWidth: barWindow.width - Config.theme.padding.big * 2
-                implicitHeight: barWindow.height - Config.theme.padding.big * 2
+                implicitWidth: barWindow.width - Settings.spacing.big * 2
+                implicitHeight: barWindow.height - Settings.spacing.big * 2
 
-                color: Config.theme.getBackground0()
-                radius: Config.theme.cornerRadius.big
+                color: Settings.palette.background0
+                radius: Settings.radius.big
 
                 Item {
-                    x: Config.theme.padding.normal
-                    y: Config.theme.padding.normal
+                    x: Settings.spacing.medium
+                    y: Settings.spacing.medium
 
-                    implicitWidth: parent.width - Config.theme.padding.normal * 2
-                    implicitHeight: parent.height - Config.theme.padding.normal * 2
+                    implicitWidth: parent.width - Settings.spacing.medium * 2
+                    implicitHeight: parent.height - Settings.spacing.medium * 2
+
+                    readonly property real center: width / 2
+                    readonly property real centerWidth: centerRow.width
 
                     RowLayout {
                         id: leftRow
@@ -81,7 +85,9 @@ Scope {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
 
-                        spacing: Config.theme.spacing.big
+                        implicitWidth: Math.min(childrenRect.width, parent.center - parent.centerWidth / 2)
+
+                        spacing: Settings.spacing.big
 
                         ActionsModule { window: barWindow }
                         Separator { implicitHeight: parent.height; vertical: true }
@@ -98,7 +104,7 @@ Scope {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
 
-                        spacing: Config.theme.spacing.big
+                        spacing: Settings.spacing.big
 
                         ClockModule { window: barWindow }
                     }
@@ -109,7 +115,7 @@ Scope {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
 
-                        spacing: Config.theme.spacing.big
+                        spacing: Settings.spacing.big
 
                         SystemTrayModule { window: barWindow }
                         //Separator { implicitHeight: parent.height; vertical: true }
@@ -149,7 +155,7 @@ Scope {
             readonly property PanelWindow correspondingBarWindow: root.windows.find(window => window.screen === modelData)
             screen: modelData
 
-            implicitHeight: 600 + Config.theme.spacing.big * 2
+            implicitHeight: 600 + Settings.spacing.big * 2
 
             exclusionMode: ExclusionMode.Ignore
 
@@ -160,7 +166,7 @@ Scope {
             }
 
             margins {
-                top: root.height - Config.theme.spacing.big
+                top: root.height - Settings.spacing.big
             }
 
             mask: Region {
@@ -176,19 +182,19 @@ Scope {
 
                 readonly property ModuleArea moduleArea: PanelManager.currentOpenPanel
                 readonly property bool isValidPanel: moduleArea && moduleArea.window === correspondingBarWindow
-                readonly property int targetWidth: popupLoader.width + Config.theme.padding.normal * 2
+                readonly property int targetWidth: popupLoader.width + Settings.spacing.medium * 2
                 readonly property int targetX: {
                     if (!isValidPanel) return x
-                    return Util.clamp(moduleArea.getContentX() + moduleArea.getContentWidth() / 2 - targetWidth / 2, Config.theme.spacing.big, popupWindow.width - targetWidth - Config.theme.spacing.big)
+                    return Util.clamp(moduleArea.getContentX() + moduleArea.getContentWidth() / 2 - targetWidth / 2, Settings.spacing.big, popupWindow.width - targetWidth - Settings.spacing.big)
                 }
 
                 implicitWidth: targetWidth
-                implicitHeight: Math.min( popupLoader.height + Config.theme.padding.normal * 2, popupWindow.height - Config.theme.spacing.big * 2 )
+                implicitHeight: Math.min( popupLoader.height + Settings.spacing.medium * 2, popupWindow.height - Settings.spacing.big * 2)
                 x: targetX
                 y: {
                     const moduleArea = PanelManager.currentOpenPanel
-                    if (!moduleArea || moduleArea.window !== correspondingBarWindow) return -popupWindow.height + Config.theme.spacing.big
-                    return Config.theme.spacing.big
+                    if (!moduleArea || moduleArea.window !== correspondingBarWindow) return -popupWindow.height + Settings.spacing.big
+                    return Settings.spacing.big
                 }
 
                 opacity: {
@@ -197,46 +203,46 @@ Scope {
                     return 1
                 }
 
-                color: Config.theme.getBackground0()
-                radius: Config.theme.cornerRadius.big
+                color: Settings.palette.background0
+                radius: Settings.radius.big
 
                 Behavior on implicitWidth {
                     enabled: slideAnimation.running || popupContainer.isValidPanel
 
                     PropertyAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
                 Behavior on implicitHeight {
                     enabled: slideAnimation.running || popupContainer.isValidPanel
 
                     PropertyAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
                 Behavior on x {
                     enabled: slideAnimation.running || popupContainer.isValidPanel
 
                     PropertyAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
                 Behavior on y {
                     PropertyAnimation {
                         id: slideAnimation
 
-                        duration: Config.theme.animationSpeed.normal
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.normal
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
 
                 Behavior on opacity {
                     PropertyAnimation {
-                        duration: Config.theme.animationSpeed.fast
-                        easing.type: Config.theme.easingType
+                        duration: Settings.animationSpeed.fast
+                        easing.type: Settings.animationEasing.easeOut
                     }
                 }
 
